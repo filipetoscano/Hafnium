@@ -1,0 +1,14 @@
+*.suo
+*.csproj.user
+*.nupkg
+.vs/
+sample/**/bin/
+sample/**/obj/
+src/**/ER.resx
+src/**/Errors.cs
+src/**/Exceptions.cs
+src/**/bin/
+src/**/obj/
+tests/**/bin/
+tests/**/obj/
+packages/

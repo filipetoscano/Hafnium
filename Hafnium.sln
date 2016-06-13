@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{722DD8DC-F7B8-4C9B-9889-5470812FAB3F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hafnium.Core", "src\Hafnium.Core\Hafnium.Core.csproj", "{F463EEB4-97F2-4107-AD6B-2B61DDD8A9ED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hafnium.Runtime", "src\Hafnium.Runtime\Hafnium.Runtime.csproj", "{9F53DCA5-8B5F-47DF-AA16-FF0EB1E950C7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sample", "sample", "{9650AC49-BF20-428D-AE30-67F072A866CC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hf.Endpoint", "sample\Hf.Endpoint\Hf.Endpoint.csproj", "{553A16FB-ACDA-4F5B-85DE-8713CB7965FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hf.Rules", "sample\Hf.Rules\Hf.Rules.csproj", "{ACB5EE3C-21AA-468C-A628-BAC092753E38}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hafnium.Web", "src\Hafnium.Web\Hafnium.Web.csproj", "{17A9CDAC-5424-4240-9693-4B6CE910213F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F463EEB4-97F2-4107-AD6B-2B61DDD8A9ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F463EEB4-97F2-4107-AD6B-2B61DDD8A9ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F463EEB4-97F2-4107-AD6B-2B61DDD8A9ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F463EEB4-97F2-4107-AD6B-2B61DDD8A9ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F53DCA5-8B5F-47DF-AA16-FF0EB1E950C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F53DCA5-8B5F-47DF-AA16-FF0EB1E950C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F53DCA5-8B5F-47DF-AA16-FF0EB1E950C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F53DCA5-8B5F-47DF-AA16-FF0EB1E950C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{553A16FB-ACDA-4F5B-85DE-8713CB7965FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{553A16FB-ACDA-4F5B-85DE-8713CB7965FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{553A16FB-ACDA-4F5B-85DE-8713CB7965FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{553A16FB-ACDA-4F5B-85DE-8713CB7965FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACB5EE3C-21AA-468C-A628-BAC092753E38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACB5EE3C-21AA-468C-A628-BAC092753E38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACB5EE3C-21AA-468C-A628-BAC092753E38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACB5EE3C-21AA-468C-A628-BAC092753E38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17A9CDAC-5424-4240-9693-4B6CE910213F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17A9CDAC-5424-4240-9693-4B6CE910213F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17A9CDAC-5424-4240-9693-4B6CE910213F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17A9CDAC-5424-4240-9693-4B6CE910213F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F463EEB4-97F2-4107-AD6B-2B61DDD8A9ED} = {722DD8DC-F7B8-4C9B-9889-5470812FAB3F}
+		{9F53DCA5-8B5F-47DF-AA16-FF0EB1E950C7} = {722DD8DC-F7B8-4C9B-9889-5470812FAB3F}
+		{553A16FB-ACDA-4F5B-85DE-8713CB7965FA} = {9650AC49-BF20-428D-AE30-67F072A866CC}
+		{ACB5EE3C-21AA-468C-A628-BAC092753E38} = {9650AC49-BF20-428D-AE30-67F072A866CC}
+		{17A9CDAC-5424-4240-9693-4B6CE910213F} = {722DD8DC-F7B8-4C9B-9889-5470812FAB3F}
+	EndGlobalSection
+EndGlobal
