@@ -66,6 +66,22 @@ namespace Hafnium.Engine.Excel
         }
 
 
+
+        /// <summary>
+        /// Gets whether or not the currently loaded Spreadsheet has a cell with the
+        /// given reference/address.
+        /// </summary>
+        /// <param name="cellReference">Excel cell address/reference (eg: SHEET!A1).</param>
+        /// <returns>True if yes, false otherwise.</returns>
+        public bool HasCell( string cellReference )
+        {
+            Tuple<string, int, int> address = ParseReference( cellReference );
+            Worksheet sheet = GetSheet( address.Item1 );
+
+            return sheet != null;
+        }
+
+
         private Range GetCell( string cellReference )
         {
             Tuple<string, int, int> address = ParseReference( cellReference );

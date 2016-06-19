@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<errors xmlns="urn:platinum/actor">
+    <actor base="{Application}" />
+
+    <error id="CompilationError" actor="~.CSharp" code="50001">
+        <description></description>
+    </error>
+
+    <error id="TypeNotFound" actor="~.CSharp" code="50002">
+        <description></description>
+    </error>
+
+    <error id="MethodNotFound" actor="~.CSharp" code="50003">
+        <description>Method '{1}' not found in implementation of '{0}' C# rule.</description>
+    </error>
+
+    <error id="InvokeException" actor="~.CSharp" code="50004">
+        <description>Exception when execution '{0}' C# rule.</description>
+    </error>
+
+    <error id="ResponseNull" actor="~.CSharp" code="50005">
+        <description>Response from '{0}' C# rule was a null: expected '{1}'.</description>
+    </error>
+
+    <error id="ResponseWrongType" actor="~.CSharp" code="50006">
+        <description>Response from '{0}' C# rule was of wrong type: expected '{1}', received '{2}'.</description>
+    </error>
+
+</errors>

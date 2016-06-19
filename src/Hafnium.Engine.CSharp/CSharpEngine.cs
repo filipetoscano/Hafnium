@@ -11,9 +11,21 @@ namespace Hafnium.Engine.CSharp
     {
         public object Run( IRule rule, object request )
         {
+            #region Validations
+
+            if ( rule == null )
+                throw new ArgumentNullException( nameof( rule ) );
+
+            if ( request == null )
+                throw new ArgumentNullException( nameof( request ) );
+
+            #endregion
+
+
             /*
              * 
              */
+            string ruleName = rule.GetType().FullName;
             string script = File.ReadAllText( @"C:\Work\Transition\Hafnium\sample\RuleContent\Hf.Rules.Rule4.cs" );
 
 
@@ -30,26 +42,59 @@ namespace Hafnium.Engine.CSharp
 
             // TODO: How to figure out?
             parameters.ReferencedAssemblies.Add( "System.dll" );
+            parameters.ReferencedAssemblies.Add( "System.Core.dll" );
             parameters.ReferencedAssemblies.Add( "Hf.Rules.dll" );
 
             CompilerResults compile = csc.CompileAssemblyFromSource( parameters, script );
 
             if ( compile.Errors.Count > 0 )
-                throw new ArgumentException( "compilation" );
+            {
+                // TODO: Collect errors.
+
+                throw new CSharpEngineException( ER.CompilationError, ruleName );
+            }
 
 
             /*
              * 
              */
             Module module = compile.CompiledAssembly.GetModules()[ 0 ];
-            Type type = module.GetType( rule.GetType().Namespace + ".Rule" );
+
+            string typeName = rule.GetType().Namespace + ".Rule";
+            Type type = module.GetType( typeName );
+
+            if ( type == null )
+                throw new CSharpEngineException( ER.TypeNotFound, ruleName, typeName );
+
             MethodInfo run = type.GetMethod( "Run" );
+
+            if ( run == null )
+                throw new CSharpEngineException( ER.MethodNotFound, ruleName, "Run" );
 
 
             /*
              * 
              */
-            object response = run.Invoke( null, new object[] { request } );
+            object response;
+
+            try
+            {
+                response = run.Invoke( null, new object[] { request } );
+            }
+            catch ( TargetInvocationException ex )
+            {
+                throw new CSharpEngineException( ER.InvokeException, ex.InnerException, ruleName );
+            }
+
+
+            /*
+             * 
+             */
+            if ( response == null )
+                throw new CSharpEngineException( ER.ResponseNull, ruleName, rule.RequestType.FullName );
+
+            if ( response.GetType() != rule.ResponseType )
+                throw new CSharpEngineException( ER.ResponseWrongType, ruleName, rule.RequestType.FullName, response.GetType().FullName );
 
             return response;
         }

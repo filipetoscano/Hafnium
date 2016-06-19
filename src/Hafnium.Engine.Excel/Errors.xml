@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<errors xmlns="urn:platinum/actor">
+    <actor base="{Application}" />
+
+    <error id="InputMapMissing" actor="~.Excel" code="20001">
+        <description>Excel rule '{0}' has unmapped input parameter '{1}'.</description>
+    </error>
+
+    <error id="InputExpressionNull" actor="~.Excel" code="20002">
+        <description>Excel rule '{0}' has input parameter '{1}' with a null mapping expression.</description>
+    </error>
+
+    <error id="InputCellMissing" actor="~.Excel" code="20003">
+        <description>Excel rule '{0}' has input parameter '{1}', but cell '{2}' does not exist.</description>
+    </error>
+
+    <error id="OutputMapMissing" actor="~.Excel" code="20004">
+        <description>Excel rule '{0}' has unmapped output parameter '{1}'.</description>
+    </error>
+
+    <error id="OutputExpressionNull" actor="~.Excel" code="20005">
+        <description>Excel rule '{0}' has output parameter '{1}' with a null mapping expression.</description>
+    </error>
+
+    <error id="OutputCellMissing" actor="~.Excel" code="20006">
+        <description>Excel rule '{0}' has output parameter '{1}', but cell '{2}' does not exist.</description>
+    </error>
+
+</errors>
