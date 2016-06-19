@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Platinum.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Platinum.Core.1.0.0.0\lib\net46\Platinum.Core.dll</HintPath>
       <Private>True</Private>
@@ -60,6 +64,8 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="JsonMessageHandler.cs" />
+    <Compile Include="Json\JsonRequest.cs" />
+    <Compile Include="Json\JsonResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SoapMessageHandler.cs" />
     <Compile Include="Soap\SoapRequest.cs" />

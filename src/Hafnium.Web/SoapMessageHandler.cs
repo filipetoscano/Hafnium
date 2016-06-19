@@ -4,6 +4,10 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Web;
+using System.Xml;
+using System.Xml.Linq;
+using System.Xml.Serialization;
+using System.Xml.XPath;
 
 namespace Hafnium.Web
 {
@@ -85,7 +89,7 @@ namespace Hafnium.Web
 
 
             /*
-             * 
+             * Derive the rule being invoked, based on the URL of the request.
              */
             string ruleName = "";
 
@@ -94,21 +98,55 @@ namespace Hafnium.Web
              * 
              */
             RuleRunner rr = new RuleRunner();
-            IRule r = rr.Get( ruleName );
+            IRule rule = rr.Get( ruleName );
+
+
+            /*
+             * 
+             */
+            XNamespace soapNs;
+
+            if ( request.Version == SoapVersion.Soap11 )
+                soapNs = "http://schemas.xmlsoap.org/soap/envelope/";
+            else
+                soapNs = "http://www.w3.org/2003/05/soap-envelope";
+
+
+            /*
+             * 
+             */
+            XmlNamespaceManager manager = new XmlNamespaceManager( new NameTable() );
+            manager.AddNamespace( "soap", soapNs.NamespaceName );
+
+
+            /*
+             * 
+             */
+            object oreq;
+
+            XDocument doc = XDocument.Load( request.Message );
+            XElement element = (XElement) doc.XPathEvaluate( " /soap:Envelope/soap:Body/*[ 1 ] ", manager );
+
+            XmlSerializer der = new XmlSerializer( rule.RequestType );
+            oreq = der.Deserialize( element.CreateReader() );
+
+
+            /*
+             * 
+             */
+            object oresp = rr.Run( rule, oreq );
 
 
 
             /*
              * 
              */
-            object oreq = "";
+            XDocument rdoc = new XDocument();
+            doc.Add( soapNs + "Envelope" );
+            
 
-
-
-            /*
-             * 
-             */
-            object oresp = rr.Run( ruleName, oreq );
+            XmlSerializer ser = new XmlSerializer( rule.ResponseType );
+            //string resp = ser.Serialize( oresp );
 
 
 
@@ -118,7 +156,6 @@ namespace Hafnium.Web
             SoapResponse response = new SoapResponse();
             response.IsFault = false;
             response.Message = "";
-
 
 
             /*
