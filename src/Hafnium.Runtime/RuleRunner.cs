@@ -5,44 +5,60 @@ namespace Hafnium.Runtime
 {
     public class RuleRunner
     {
-        public IRule Get( string name )
+        public IRule Get( string ruleName )
         {
-            Type todo = Type.GetType( "Hf.Rules.Rule1Request" );
+            #region Validations
 
-            IRule r = Platinum.Activator.Create<IRule>( todo );
+            if ( ruleName == null )
+                throw new ArgumentNullException( nameof( ruleName ) );
 
-            return r;
+            #endregion
+
+            Type type = Type.GetType( ruleName + ",Hf.Rules" );
+
+            IRule rule = Platinum.Activator.Create<IRule>( type );
+
+            return rule;
         }
 
 
-        public object Run( string name, object request )
+
+        public object Run( string ruleName, object request )
         {
-            /*
-             * 
-             */
-            IRule r = Get( name );
+            IRule r = Get( ruleName );
+            return Run( r, request );
+        }
+
+
+        public object Run( IRule rule, object request )
+        {
+            #region Validations
+
+            if ( rule == null )
+                throw new ArgumentNullException( nameof( rule ) );
+
+            if ( request == null )
+                throw new ArgumentNullException( nameof( request ) );
+
+            #endregion
 
 
             /*
              * 
              */
-            IRuleEngine re = null;
-            RuleEngineAttribute  rea = r.GetType().GetCustomAttribute<RuleEngineAttribute>();
+            RuleEngineAttribute rea = rule.GetType().GetCustomAttribute<RuleEngineAttribute>();
+            IRuleEngine engine = EngineFactory.For( rea.Name );
 
-            if ( rea.Name == "Excel" )
-                re = Platinum.Activator.Create<IRuleEngine>( "Hafnium.Engine.Excel.ExcelEngine,Hafnium.Engine.Excel" );
-
-            if ( rea.Name == "Javascript" )
-                re = Platinum.Activator.Create<IRuleEngine>( "Hafnium.Engine.Javascript.JavascriptEngine,Hafnium.Engine.Javascript" );
-
-            if ( re == null )
+            if ( engine == null )
                 throw new NotSupportedException( rea.Name );
 
 
             /*
              * 
              */
-            return re.Run( r, request );
+            object response = engine.Run( rule, request );
+
+            return response;
         }
     }
 }

@@ -1,7 +1,4 @@
-﻿using Hafnium.Engine.CSharp;
-using Hafnium.Engine.Excel;
-using Hafnium.Engine.Javascript;
-using Hafnium.Engine.Python;
+﻿using Hafnium.Runtime;
 using Hf.Rules;
 using System;
 
@@ -25,8 +22,8 @@ namespace Hf.Client
                 s = args[ 2 ];
 
             //Rule1( i, d, s );
-            //Rule2( i, d, s );
-            //Rule3( i, d, s );
+            Rule2( i, d, s );
+            Rule3( i, d, s );
             Rule4( i, d, s );
         }
 
@@ -46,10 +43,8 @@ namespace Hf.Client
             Console.WriteLine( request.Decimal );
             Console.WriteLine( request.String );
 
-            Rule1 rule = new Rule1();
-
-            ExcelEngine engine = new ExcelEngine();
-            Rule1Response response = (Rule1Response) engine.Run( rule, request );
+            RuleRunner rr = new RuleRunner();
+            Rule1Response response = (Rule1Response) rr.Run( "Hf.Rules.Rule1", request );
 
             Console.WriteLine( "--- Rule1Response ---" );
             Console.WriteLine( response.Boolean );
@@ -75,9 +70,8 @@ namespace Hf.Client
             Console.WriteLine( request.Decimal );
             Console.WriteLine( request.String );
 
-            Rule2 rule = new Rule2();
-            JavascriptEngine engine = new JavascriptEngine();
-            Rule2Response response = (Rule2Response) engine.Run( rule, request );
+            RuleRunner rr = new RuleRunner();
+            Rule2Response response = (Rule2Response) rr.Run( "Hf.Rules.Rule2", request );
 
             Console.WriteLine( "--- Rule2Response ---" );
             Console.WriteLine( response.Boolean );
@@ -103,9 +97,8 @@ namespace Hf.Client
             Console.WriteLine( request.Decimal );
             Console.WriteLine( request.String );
 
-            Rule3 rule = new Rule3();
-            PythonEngine engine = new PythonEngine();
-            Rule3Response response = (Rule3Response) engine.Run( rule, request );
+            RuleRunner rr = new RuleRunner();
+            Rule3Response response = (Rule3Response) rr.Run( "Hf.Rules.Rule3", request );
 
             Console.WriteLine( "--- Rule3Response ---" );
             Console.WriteLine( response.Boolean );
@@ -131,9 +124,8 @@ namespace Hf.Client
             Console.WriteLine( request.Decimal );
             Console.WriteLine( request.String );
 
-            Rule4 rule = new Rule4();
-            CSharpEngine engine = new CSharpEngine();
-            Rule4Response response = (Rule4Response) engine.Run( rule, request );
+            RuleRunner rr = new RuleRunner();
+            Rule4Response response = (Rule4Response) rr.Run( "Hf.Rules.Rule4", request );
 
             Console.WriteLine( "--- Rule4Response ---" );
             Console.WriteLine( response.Boolean );
