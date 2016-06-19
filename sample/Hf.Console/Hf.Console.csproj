@@ -4,15 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9F53DCA5-8B5F-47DF-AA16-FF0EB1E950C7}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{E7D50E31-21D7-4794-B129-1C5D84627FF2}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Hafnium.Runtime</RootNamespace>
-    <AssemblyName>Hafnium.Runtime</AssemblyName>
+    <RootNamespace>Hf.Console</RootNamespace>
+    <AssemblyName>Hf.Console</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +24,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -30,18 +33,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Dapper, Version=1.40.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Dapper.1.42\lib\net45\Dapper.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Platinum.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Platinum.Core.1.0.0.0\lib\net46\Platinum.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Platinum.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Platinum.Data.1.0.0.0\lib\net46\Platinum.Data.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -52,20 +43,41 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\GlobalVersion.cs">
-      <Link>Properties\GlobalVersion.cs</Link>
-    </Compile>
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RuleRunner.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Hafnium.Core\Hafnium.Core.csproj">
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Hafnium.Core\Hafnium.Core.csproj">
       <Project>{f463eeb4-97f2-4107-ad6b-2b61ddd8a9ed}</Project>
       <Name>Hafnium.Core</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
+    <ProjectReference Include="..\..\src\Hafnium.Engine.CSharp\Hafnium.Engine.CSharp.csproj">
+      <Project>{de4e688e-bc83-47ec-b718-5cb4e3cc583c}</Project>
+      <Name>Hafnium.Engine.CSharp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Hafnium.Engine.Excel\Hafnium.Engine.Excel.csproj">
+      <Project>{e600cc49-4950-47aa-82e1-0ea99e3634d2}</Project>
+      <Name>Hafnium.Engine.Excel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Hafnium.Engine.Javascript\Hafnium.Engine.Javascript.csproj">
+      <Project>{96efb45b-1395-4043-a248-66f5091a7fe8}</Project>
+      <Name>Hafnium.Engine.Javascript</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Hafnium.Engine.Python\Hafnium.Engine.Python.csproj">
+      <Project>{35b681ad-24c5-4c1b-8ce4-08b00eb38dca}</Project>
+      <Name>Hafnium.Engine.Python</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Hafnium.Runtime\Hafnium.Runtime.csproj">
+      <Project>{9f53dca5-8b5f-47df-aa16-ff0eb1e950c7}</Project>
+      <Name>Hafnium.Runtime</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Hf.Rules\Hf.Rules.csproj">
+      <Project>{acb5ee3c-21aa-468c-a628-bac092753e38}</Project>
+      <Name>Hf.Rules</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

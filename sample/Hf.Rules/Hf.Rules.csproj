@@ -40,6 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Rule4.cs" />
+    <Compile Include="Rule3.cs" />
+    <Compile Include="Rule2.cs" />
     <Compile Include="Rule1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

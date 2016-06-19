@@ -5,15 +5,11 @@ namespace Hafnium.Runtime
 {
     public class RuleRunner
     {
-        public Rule Get( string name )
+        public IRule Get( string name )
         {
-            Type rq = Type.GetType( "Hf.Rules.Rule1Request" );
-            Type rp = Type.GetType( "Hf.Rules.Rule1Request" );
+            Type todo = Type.GetType( "Hf.Rules.Rule1Request" );
 
-            Rule r = new Rule();
-            r.Name = "Hf.Rules.Rule1";
-            r.RequestType = rq;
-            r.ResponseType = rp;
+            IRule r = Platinum.Activator.Create<IRule>( todo );
 
             return r;
         }
@@ -21,14 +17,32 @@ namespace Hafnium.Runtime
 
         public object Run( string name, object request )
         {
-            Rule r = Get( name );
+            /*
+             * 
+             */
+            IRule r = Get( name );
 
-            MethodInfo template = this.GetType().GetMethod( "Execute" );
-            MethodInfo execute = template.MakeGenericMethod( r.RequestType, r.ResponseType );
 
-            object response = execute.Invoke( this, new object[] { request } );
+            /*
+             * 
+             */
+            IRuleEngine re = null;
+            RuleEngineAttribute  rea = r.GetType().GetCustomAttribute<RuleEngineAttribute>();
 
-            return response;
+            if ( rea.Name == "Excel" )
+                re = Platinum.Activator.Create<IRuleEngine>( "Hafnium.Engine.Excel.ExcelEngine,Hafnium.Engine.Excel" );
+
+            if ( rea.Name == "Javascript" )
+                re = Platinum.Activator.Create<IRuleEngine>( "Hafnium.Engine.Javascript.JavascriptEngine,Hafnium.Engine.Javascript" );
+
+            if ( re == null )
+                throw new NotSupportedException( rea.Name );
+
+
+            /*
+             * 
+             */
+            return re.Run( r, request );
         }
     }
 }
