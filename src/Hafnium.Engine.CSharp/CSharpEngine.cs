@@ -25,7 +25,6 @@ namespace Hafnium.Engine.CSharp
             /*
              * 
              */
-            string ruleName = rule.GetType().FullName;
             string script = File.ReadAllText( @"C:\Work\Transition\Hafnium\sample\RuleContent\Hf.Rules.Rule4.cs" );
 
 
@@ -51,7 +50,7 @@ namespace Hafnium.Engine.CSharp
             {
                 // TODO: Collect errors.
 
-                throw new CSharpEngineException( ER.CompilationError, ruleName );
+                throw new CSharpEngineException( ER.CompilationError, rule.Name );
             }
 
 
@@ -64,12 +63,12 @@ namespace Hafnium.Engine.CSharp
             Type type = module.GetType( typeName );
 
             if ( type == null )
-                throw new CSharpEngineException( ER.TypeNotFound, ruleName, typeName );
+                throw new CSharpEngineException( ER.TypeNotFound, rule.Name, typeName );
 
             MethodInfo run = type.GetMethod( "Run" );
 
             if ( run == null )
-                throw new CSharpEngineException( ER.MethodNotFound, ruleName, "Run" );
+                throw new CSharpEngineException( ER.MethodNotFound, rule.Name, "Run" );
 
 
             /*
@@ -83,7 +82,7 @@ namespace Hafnium.Engine.CSharp
             }
             catch ( TargetInvocationException ex )
             {
-                throw new CSharpEngineException( ER.InvokeException, ex.InnerException, ruleName );
+                throw new CSharpEngineException( ER.InvokeException, ex.InnerException, rule.Name );
             }
 
 
@@ -91,10 +90,10 @@ namespace Hafnium.Engine.CSharp
              * 
              */
             if ( response == null )
-                throw new CSharpEngineException( ER.ResponseNull, ruleName, rule.RequestType.FullName );
+                throw new CSharpEngineException( ER.ResponseNull, rule.Name, rule.RequestType.FullName );
 
             if ( response.GetType() != rule.ResponseType )
-                throw new CSharpEngineException( ER.ResponseWrongType, ruleName, rule.RequestType.FullName, response.GetType().FullName );
+                throw new CSharpEngineException( ER.ResponseWrongType, rule.Name, rule.RequestType.FullName, response.GetType().FullName );
 
             return response;
         }

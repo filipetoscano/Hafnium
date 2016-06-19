@@ -21,7 +21,6 @@ namespace Hafnium.Engine.Excel
             /*
              * 
              */
-            string ruleName = rule.GetType().FullName;
             object response = Activator.CreateInstance( rule.ResponseType );
 
             using ( var xls = new Spreadsheet() )
@@ -42,15 +41,15 @@ namespace Hafnium.Engine.Excel
                     MapAttribute map = prop.GetCustomAttribute<MapAttribute>();
 
                     if ( map == null )
-                        throw new ExcelEngineException( ER.InputMapMissing, ruleName, prop.Name );
+                        throw new ExcelEngineException( ER.InputMapMissing, rule.Name, prop.Name );
 
                     if ( map.Expression == null )
-                        throw new ExcelEngineException( ER.InputExpressionNull, ruleName, prop.Name );
+                        throw new ExcelEngineException( ER.InputExpressionNull, rule.Name, prop.Name );
 
                     object value = prop.GetValue( request );
 
                     if ( xls.HasCell( map.Expression ) == false )
-                        throw new ExcelEngineException( ER.InputCellMissing, ruleName, prop.Name, map.Expression );
+                        throw new ExcelEngineException( ER.InputCellMissing, rule.Name, prop.Name, map.Expression );
 
                     xls.SetValue( map.Expression, value );
                 }
@@ -70,13 +69,13 @@ namespace Hafnium.Engine.Excel
                     MapAttribute map = prop.GetCustomAttribute<MapAttribute>();
 
                     if ( map == null )
-                        throw new ExcelEngineException( ER.OutputMapMissing, ruleName, prop.Name );
+                        throw new ExcelEngineException( ER.OutputMapMissing, rule.Name, prop.Name );
 
                     if ( map.Expression == null )
-                        throw new ExcelEngineException( ER.OutputExpressionNull, ruleName, prop.Name );
+                        throw new ExcelEngineException( ER.OutputExpressionNull, rule.Name, prop.Name );
 
                     if ( xls.HasCell( map.Expression ) == false )
-                        throw new ExcelEngineException( ER.OutputCellMissing, ruleName, prop.Name, map.Expression );
+                        throw new ExcelEngineException( ER.OutputCellMissing, rule.Name, prop.Name, map.Expression );
 
                     object value = xls.GetValue( prop.PropertyType, map.Expression );
                     prop.SetValue( response, value );

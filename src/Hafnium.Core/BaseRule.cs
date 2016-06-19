@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Hafnium
 {
-    public class BaseRule
+    public class BaseRule : IRule
     {
         /// <summary>
         /// Initializes a new instance of <see cref="BaseRule" />. This base
@@ -22,6 +22,18 @@ namespace Hafnium
 
             this.RequestType = gta[ 0 ];
             this.ResponseType = gta[ 1 ];
+        }
+
+
+        /// <summary>
+        /// Gets the name of the rule.
+        /// </summary>
+        public string Name
+        {
+            get
+            {
+                return this.GetType().FullName;
+            }
         }
 
 

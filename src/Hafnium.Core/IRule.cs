@@ -5,6 +5,14 @@ namespace Hafnium
     public interface IRule
     {
         /// <summary>
+        /// Gets the name of the rule.
+        /// </summary>
+        string Name
+        {
+            get;
+        }
+
+        /// <summary>
         /// Gets documentation pertinent to the present rule.
         /// </summary>
         RuleMetadata Metadata

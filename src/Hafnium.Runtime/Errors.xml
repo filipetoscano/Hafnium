@@ -2,8 +2,24 @@
 <errors xmlns="urn:platinum/actor">
     <actor base="{Application}" />
 
-    <error id="Placeholder" actor="~.Python" code="10001">
-        <description></description>
+    <error id="RequestWrongType" actor="~.Rule.Caller" code="10001">
+        <description>Rule '{0}' expects request of type '{1}', but instead received '{2}'.</description>
+    </error>
+
+    <error id="RuleNoEngine" actor="~.Rule.Internal" code="10002">
+        <description>Rule '{0}': Class '{1}' is not decorated with [RuleEngineAttribute] attribute.</description>
+    </error>
+
+    <error id="EngineNotFound" actor="~.Rule.Internal" code="10003">
+        <description>No engine '{0}' found.</description>
+    </error>
+
+    <error id="ResponseNull" actor="~.Rule.Engine" code="10004">
+        <description>Rule '{0}': Engine '{1}' returned a null response.</description>
+    </error>
+
+    <error id="ResponseWrongType" actor="~.Rule.Engine" code="10005">
+        <description>Rule '{0}': Engine '{1}' returned '{3}', but expected '{2}'.</description>
     </error>
 
 </errors>
