@@ -7,8 +7,8 @@
     <ProjectGuid>{17A9CDAC-5424-4240-9693-4B6CE910213F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Hafnium.Web</RootNamespace>
-    <AssemblyName>Hafnium.Web</AssemblyName>
+    <RootNamespace>Hafnium.WebServices</RootNamespace>
+    <AssemblyName>Hafnium.WebServices</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

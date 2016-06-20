@@ -1,18 +1,29 @@
 ﻿using Hafnium.Runtime;
-using Hafnium.Web.Json;
+using Hafnium.WebServices.Json;
 using Newtonsoft.Json;
+using System;
 using System.IO;
 using System.Web;
 
-namespace Hafnium.Web
+namespace Hafnium.WebServices
 {
     public class JsonMessageHandler : IHttpHandler
     {
         public void ProcessRequest( HttpContext context )
         {
-            JsonRequest request = new JsonRequest();
+            string urlPath = context.Request.AppRelativeCurrentExecutionFilePath.Substring( "~/api/".Length ) + context.Request.PathInfo;
 
+
+            /*
+             * 
+             */
+            JsonRequest request = new JsonRequest();
+            request.ExecutionId = Guid.NewGuid();
+            request.Rule = urlPath.Replace( "/", "." );
+            request.MomentStart = DateTime.UtcNow;
             
+
+
             /*
              * 
              */
@@ -24,16 +35,16 @@ namespace Hafnium.Web
 
 
             /*
-             * Derive the rule being invoked, based on the URL of the request.
-             */
-            string ruleName = "";
-
-
-            /*
              * 
              */
             RuleRunner rr = new RuleRunner();
-            IRule rule = rr.Get( ruleName );
+            IRule rule = rr.Get( request.Rule );
+
+            if ( rule == null )
+            {
+                context.Response.StatusCode = 404;
+                context.Response.End();
+            }
 
 
             /*
@@ -54,6 +65,21 @@ namespace Hafnium.Web
             JsonResponse response = new JsonResponse();
             response.IsFault = false;
             response.Message = JsonConvert.SerializeObject( oresp );
+
+
+            /*
+             * 
+             */
+            context.Response.StatusCode = 200;
+            context.Response.CacheControl = "private";
+            context.Response.ContentType = "application/json; charset=utf-8";
+
+            context.Response.Headers.Add( "X-Hafnium-ExecutionId", request.ExecutionId.ToString( "D" ) );
+            context.Response.Headers.Add( "X-Hafnium-MomentStart", request.MomentStart.ToString( "s" ) );
+            context.Response.Headers.Add( "X-Hafnium-MomentEnd", DateTime.UtcNow.ToString( "s" ) );
+
+            context.Response.Write( response.Message );
+            context.Response.End();
         }
 
 

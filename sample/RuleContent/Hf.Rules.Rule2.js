@@ -1,14 +1,22 @@
 'use strict';
 
-if ( request.Integer > 5 ) {
+var bool = false;
+var int = 5;
+var dec = 5.55;
 
+if ( request.Integer > 5 ) {
+    bool = true;
 }
 
+if ( request.Integer > 10 && request.Decimal > 10 ) {
+    int = -1;
+    dec = -1;
+}
 
 var response = {};
-response.Boolean = true;
-response.Integer = 5;
-response.Decimal = 5.55;
-response.String = 'Hello to: ' + request.String;
+response.Boolean = bool;
+response.Integer = int;
+response.Decimal = dec;
+response.String = 'from javascript, orig=' + request.String;
 
 /* eof */

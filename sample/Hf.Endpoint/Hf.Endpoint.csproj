@@ -86,13 +86,29 @@
       <Project>{f463eeb4-97f2-4107-ad6b-2b61ddd8a9ed}</Project>
       <Name>Hafnium.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\src\Hafnium.Engine.CSharp\Hafnium.Engine.CSharp.csproj">
+      <Project>{de4e688e-bc83-47ec-b718-5cb4e3cc583c}</Project>
+      <Name>Hafnium.Engine.CSharp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Hafnium.Engine.Excel\Hafnium.Engine.Excel.csproj">
+      <Project>{e600cc49-4950-47aa-82e1-0ea99e3634d2}</Project>
+      <Name>Hafnium.Engine.Excel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Hafnium.Engine.Javascript\Hafnium.Engine.Javascript.csproj">
+      <Project>{96efb45b-1395-4043-a248-66f5091a7fe8}</Project>
+      <Name>Hafnium.Engine.Javascript</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Hafnium.Engine.Python\Hafnium.Engine.Python.csproj">
+      <Project>{35b681ad-24c5-4c1b-8ce4-08b00eb38dca}</Project>
+      <Name>Hafnium.Engine.Python</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\Hafnium.Runtime\Hafnium.Runtime.csproj">
       <Project>{9f53dca5-8b5f-47df-aa16-ff0eb1e950c7}</Project>
       <Name>Hafnium.Runtime</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\Hafnium.Web\Hafnium.Web.csproj">
+    <ProjectReference Include="..\..\src\Hafnium.Web\Hafnium.WebServices.csproj">
       <Project>{17a9cdac-5424-4240-9693-4b6ce910213f}</Project>
-      <Name>Hafnium.Web</Name>
+      <Name>Hafnium.WebServices</Name>
     </ProjectReference>
     <ProjectReference Include="..\Hf.Rules\Hf.Rules.csproj">
       <Project>{acb5ee3c-21aa-468c-a628-bac092753e38}</Project>

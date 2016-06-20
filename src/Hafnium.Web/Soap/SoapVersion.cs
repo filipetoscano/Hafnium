@@ -1,4 +1,4 @@
-﻿namespace Hafnium.Web.Soap
+﻿namespace Hafnium.WebServices.Soap
 {
     public enum SoapVersion
     {

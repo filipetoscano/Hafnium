@@ -1,4 +1,4 @@
-﻿namespace Hafnium.Web.Json
+﻿namespace Hafnium.WebServices.Json
 {
     public class JsonResponse
     {

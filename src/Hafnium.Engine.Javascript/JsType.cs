@@ -44,7 +44,7 @@ namespace Hafnium.Engine.Javascript
             if ( value == null )
                 throw new ArgumentNullException( "value" );
 
-            return (int) value;
+            return Convert.ToInt32( value );
         }
 
 

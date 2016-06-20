@@ -1,5 +1,5 @@
 ﻿using Hafnium.Runtime;
-using Hafnium.Web.Soap;
+using Hafnium.WebServices.Soap;
 using System;
 using System.IO;
 using System.Linq;
@@ -9,7 +9,7 @@ using System.Xml.Linq;
 using System.Xml.Serialization;
 using System.Xml.XPath;
 
-namespace Hafnium.Web
+namespace Hafnium.WebServices
 {
     public class SoapMessageHandler : IHttpHandler
     {

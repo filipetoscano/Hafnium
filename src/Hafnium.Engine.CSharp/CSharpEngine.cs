@@ -2,6 +2,7 @@
 using System;
 using System.CodeDom.Compiler;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 
 namespace Hafnium.Engine.CSharp
@@ -40,9 +41,16 @@ namespace Hafnium.Engine.CSharp
             parameters.TreatWarningsAsErrors = false;
 
             // TODO: How to figure out?
-            parameters.ReferencedAssemblies.Add( "System.dll" );
-            parameters.ReferencedAssemblies.Add( "System.Core.dll" );
-            parameters.ReferencedAssemblies.Add( "Hf.Rules.dll" );
+            var assemblies = AppDomain.CurrentDomain
+                            .GetAssemblies()
+                            .Where( a => !a.IsDynamic )
+                            .Select( a => a.Location );
+
+            parameters.ReferencedAssemblies.AddRange( assemblies.ToArray() );
+
+            //parameters.ReferencedAssemblies.Add( "System.dll" );
+            //parameters.ReferencedAssemblies.Add( "System.Core.dll" );
+            //parameters.ReferencedAssemblies.Add( "Hf.Rules.dll" );
 
             CompilerResults compile = csc.CompileAssemblyFromSource( parameters, script );
 

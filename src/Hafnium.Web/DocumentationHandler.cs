@@ -1,6 +1,6 @@
 ﻿using System.Web;
 
-namespace Hafnium.Web
+namespace Hafnium.WebServices
 {
     public class DocumentationHandler : IHttpHandler
     {

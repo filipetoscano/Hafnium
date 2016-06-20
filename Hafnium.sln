@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hf.Endpoint", "sample\Hf.En
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hf.Rules", "sample\Hf.Rules\Hf.Rules.csproj", "{ACB5EE3C-21AA-468C-A628-BAC092753E38}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hafnium.Web", "src\Hafnium.Web\Hafnium.Web.csproj", "{17A9CDAC-5424-4240-9693-4B6CE910213F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hafnium.WebServices", "src\Hafnium.Web\Hafnium.WebServices.csproj", "{17A9CDAC-5424-4240-9693-4B6CE910213F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hf.Console", "sample\Hf.Console\Hf.Console.csproj", "{E7D50E31-21D7-4794-B129-1C5D84627FF2}"
 EndProject

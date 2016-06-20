@@ -15,6 +15,7 @@ namespace Hafnium.Engine.Excel
         private static extern uint GetWindowThreadProcessId( IntPtr hWnd, out uint lpdwProcessId );
 
         private readonly Dictionary<string, Worksheet> _worksheets = new Dictionary<string, Worksheet>();
+        private string _filePath;
         private Application _excelApplication;
         private Workbook _workbook;
         private bool _autoCalculate;
@@ -44,6 +45,9 @@ namespace Hafnium.Engine.Excel
         }
 
 
+        /// <summary>
+        /// Starts the Excel application.
+        /// </summary>
         private void OpenExcelApplication()
         {
             _excelApplication = new Application { Visible = false };
@@ -52,6 +56,11 @@ namespace Hafnium.Engine.Excel
         }
 
 
+        /// <summary>
+        /// Gets the worksheet with the given name from the open workbook.
+        /// </summary>
+        /// <param name="name">Name of worksheet.</param>
+        /// <returns>Instance of <see cref="Worksheet"/>.</returns>
         private Worksheet GetSheet( string name )
         {
             Worksheet sheet;
@@ -64,7 +73,6 @@ namespace Hafnium.Engine.Excel
 
             return sheet;
         }
-
 
 
         /// <summary>
@@ -82,6 +90,11 @@ namespace Hafnium.Engine.Excel
         }
 
 
+        /// <summary>
+        /// Gets the cell with the given Excel address / cell reference.
+        /// </summary>
+        /// <param name="cellReference">Excel address, eg API!E5.</param>
+        /// <returns>Cell reference.</returns>
         private Range GetCell( string cellReference )
         {
             Tuple<string, int, int> address = ParseReference( cellReference );
@@ -92,8 +105,20 @@ namespace Hafnium.Engine.Excel
         }
 
 
+        /// <summary>
+        /// Parses an Excel address.
+        /// </summary>
+        /// <param name="cellReference">Excel address, eg API!E5.</param>
+        /// <returns>Tuple with sheet name, row number and column number.</returns>
         private static Tuple<string, int, int> ParseReference( string cellReference )
         {
+            #region Validations
+
+            if ( cellReference == null )
+                throw new ArgumentNullException( nameof( cellReference ) );
+
+            #endregion
+
             string sheet;
             string columnName;
             int column;
@@ -138,14 +163,26 @@ namespace Hafnium.Engine.Excel
         }
 
 
-        private static int GetColumnNumber( string name )
+        /// <summary>
+        /// Converts an Excel column name into a number.
+        /// </summary>
+        /// <param name="columnName">Name of column (eg: AA)</param>
+        /// <returns>Column name as a number.</returns>
+        private static int GetColumnNumber( string columnName )
         {
+            #region Validations
+
+            if ( columnName == null )
+                throw new ArgumentNullException( nameof( columnName ) );
+
+            #endregion
+
             int number = 0;
             int pow = 1;
 
-            for ( int i = name.Length - 1; i >= 0; i-- )
+            for ( int i = columnName.Length - 1; i >= 0; i-- )
             {
-                number += (name[ i ] - 'A' + 1) * pow;
+                number += (columnName[ i ] - 'A' + 1) * pow;
                 pow *= 26;
             }
 
@@ -228,6 +265,8 @@ namespace Hafnium.Engine.Excel
                         _autoCalculate ?
                         XlCalculation.xlCalculationAutomatic :
                         XlCalculation.xlCalculationManual;
+
+            _filePath = tempFileName;
         }
 
 
@@ -262,6 +301,8 @@ namespace Hafnium.Engine.Excel
                         _autoCalculate ?
                         XlCalculation.xlCalculationAutomatic :
                         XlCalculation.xlCalculationManual;
+
+            _filePath = tempFileName;
         }
 
 
@@ -279,10 +320,25 @@ namespace Hafnium.Engine.Excel
 
             if ( disposing == true )
             {
-                _excelApplication.Quit();
+                /*
+                 * Get rid of the temporary file in filesystem.
+                 */
+                try
+                {
+                    File.Delete( _filePath );
+                }
+                catch
+                {
+                    // At least we tried
+                }
 
-                //var hWnd = _excelApplication.Application.Hwnd;
-                //TryKillProcessByMainWindowHwnd( hWnd );
+
+                /*
+                 * Quitting the application doesn't work: need to kill the process
+                 * directly! :-/
+                 */
+                var hWnd = _excelApplication.Application.Hwnd;
+                TryKillProcessByMainWindowHwnd( hWnd );
             }
 
             _disposed = true;
