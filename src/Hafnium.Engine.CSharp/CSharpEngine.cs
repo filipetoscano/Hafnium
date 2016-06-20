@@ -40,17 +40,12 @@ namespace Hafnium.Engine.CSharp
             parameters.GenerateExecutable = false;
             parameters.TreatWarningsAsErrors = false;
 
-            // TODO: How to figure out?
             var assemblies = AppDomain.CurrentDomain
                             .GetAssemblies()
                             .Where( a => !a.IsDynamic )
                             .Select( a => a.Location );
 
             parameters.ReferencedAssemblies.AddRange( assemblies.ToArray() );
-
-            //parameters.ReferencedAssemblies.Add( "System.dll" );
-            //parameters.ReferencedAssemblies.Add( "System.Core.dll" );
-            //parameters.ReferencedAssemblies.Add( "Hf.Rules.dll" );
 
             CompilerResults compile = csc.CompileAssemblyFromSource( parameters, script );
 

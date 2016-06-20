@@ -22,9 +22,9 @@ namespace Hf.Client
                 s = args[ 2 ];
 
             //Rule1( i, d, s );
-            Rule2( i, d, s );
-            Rule3( i, d, s );
-            Rule4( i, d, s );
+            //Rule2( i, d, s );
+            //Rule3( i, d, s );
+            //Rule4( i, d, s );
         }
 
 

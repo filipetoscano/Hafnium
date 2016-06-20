@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?codebehind transformation="ToRule.xslt"?>
+<rule xmlns="urn:hafnium" xmlns:xls="urn:hafnium/excel">
+    <name>Sample Excel rule.</name>
+    <author name="FT" email="ft@gm" />
+
+    <request>
+        <int name="Integer" xls:cell="API!B3" />
+        <decimal name="Decimal" xls:cell="API!B4" />
+        <string name="String" xls:cell="API!B5" />
+    </request>
+
+    <response>
+        <bool name="Boolean" xls:cell="API!E3" />
+        <int name="Integer" xls:cell="API!E4" />
+        <decimal name="Decimal" xls:cell="API!E5" />
+        <date name="DateTime" xls:cell="API!E6" />
+        <string name="String" xls:cell="API!E7" />
+    </response>
+
+    <engine>Excel</engine>
+</rule>

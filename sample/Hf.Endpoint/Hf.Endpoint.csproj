@@ -66,6 +66,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="assets\css\hf.css" />
     <Content Include="packages.config" />
     <Content Include="index.hf" />
     <None Include="Web.Debug.config">
@@ -114,6 +115,9 @@
       <Project>{acb5ee3c-21aa-468c-a628-bac092753e38}</Project>
       <Name>Hf.Rules</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="assets\img\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

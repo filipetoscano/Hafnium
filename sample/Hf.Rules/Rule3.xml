@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?codebehind transformation="ToRule.xslt"?>
+<rule xmlns="urn:hafnium">
+    <name>Sample Python rule.</name>
+    <author name="FT" email="ft@gm" />
+
+    <request>
+        <int name="Integer" />
+        <decimal name="Decimal" />
+        <string name="String" />
+    </request>
+
+    <response>
+        <bool name="Boolean" />
+        <int name="Integer" />
+        <decimal name="Decimal" />
+        <date name="DateTime" />
+        <string name="String" />
+    </response>
+
+    <engine>Python</engine>
+</rule>

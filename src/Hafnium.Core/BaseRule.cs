@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Hafnium
 {
-    public class BaseRule : IRule
+    public abstract class BaseRule
     {
         /// <summary>
         /// Initializes a new instance of <see cref="BaseRule" />. This base

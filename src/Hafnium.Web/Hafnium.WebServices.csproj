@@ -91,9 +91,10 @@
       <Generator>YResxExceptionTool</Generator>
       <LastGenOutput>Exceptions.cs</LastGenOutput>
     </None>
-    <Content Include="Transforms\ToWsdl.xslt" />
-    <Content Include="Transforms\ToRule.xslt" />
-    <Content Include="Transforms\ToIndex.xslt" />
+    <EmbeddedResource Include="Transforms\ToDisco.xslt" />
+    <EmbeddedResource Include="Transforms\ToWsdl.xslt" />
+    <EmbeddedResource Include="Transforms\ToRule.xslt" />
+    <EmbeddedResource Include="Transforms\ToIndex.xslt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
