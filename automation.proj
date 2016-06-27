@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"
-    DefaultTargets="help">
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="help">
     <PropertyGroup>
         <version>1.0.0.0</version>
     </PropertyGroup>

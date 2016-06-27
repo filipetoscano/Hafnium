@@ -44,7 +44,7 @@ namespace Hf.Rules
 
         /// <summary />
         [JsonConverter( typeof( Platinum.Json.DateConverter ) )]
-        [XmlElement( "xsd:date" )]
+        [XmlElement( DataType = "date" )]
         [Map( Expression = "API!E6" )]
         public DateTime DateTime { get; set; }
 
@@ -58,7 +58,7 @@ namespace Hf.Rules
     /// ?
     /// </summary>
     [RuleEngine( "Excel" )]
-    public partial class Rule1 : BaseRule, IRule<Rule1Request, Rule1Response>
+    public partial class Rule1 : ResxBaseRule, IRule<Rule1Request, Rule1Response>
     {
     }
 

@@ -73,31 +73,31 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Rule1.xml">
+    <EmbeddedResource Include="Rule1.xml">
       <Generator>YXsltTool</Generator>
       <LastGenOutput>Rule1.cs</LastGenOutput>
-    </None>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Rule2.xml">
+    <EmbeddedResource Include="Rule2.xml">
       <Generator>YXsltTool</Generator>
       <LastGenOutput>Rule2.cs</LastGenOutput>
-    </None>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Rule4.xml">
+    <EmbeddedResource Include="Rule4.xml">
       <Generator>YXsltTool</Generator>
       <LastGenOutput>Rule4.cs</LastGenOutput>
-    </None>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Rule3.xml">
+    <EmbeddedResource Include="Rule3.xml">
       <Generator>YXsltTool</Generator>
       <LastGenOutput>Rule3.cs</LastGenOutput>
-    </None>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,33 +1,72 @@
 ﻿using Jurassic;
 using Jurassic.Library;
 using System;
-using System.IO;
 using System.Reflection;
+using System.Text;
 
 namespace Hafnium.Engine.Javascript
 {
     [RuleEngine( "Javascript" )]
+    [RuleEngineContent( Extension = ".js", Syntax = "javascript", MimeType = "application/javascript" )]
     public class JavascriptEngine : IRuleEngine
     {
-        public object Run( IRule rule, object request )
+        public object Run( RuleContext context, object request )
         {
+            #region Validations
+
+            if ( context == null )
+                throw new ArgumentNullException( nameof( context ) );
+
+            if ( request == null )
+                throw new ArgumentNullException( nameof( request ) );
+
+            #endregion
+
             /*
              * 
              */
-            string script = File.ReadAllText( @"C:\Work\Transition\Hafnium\sample\RuleContent\Hf.Rules.Rule2.js" );
+            IRule rule = context.Rule;
+            string script = Encoding.UTF8.GetString( context.Content );
 
 
+            /*
+             * Engine
+             */
             var engine = new ScriptEngine();
             engine.EnableExposedClrTypes = true;
+
+
+            /*
+             * Input
+             */
             engine.SetGlobalValue( "request", request );
 
-            engine.Execute( script );
+
+            /*
+             * Execute
+             */
+            try
+            {
+                engine.Execute( script );
+            }
+            catch ( JavaScriptException ex )
+            {
+                throw new JavascriptEngineException( ER.ExecuteFailed, ex, rule.Name );
+            }
+
+
+            /*
+             * Output
+             */
+            ObjectInstance rx = (ObjectInstance) engine.GetGlobalValue( "response" );
+
+            if ( rx == null )
+                throw new JavascriptEngineException( ER.ResponseNull, rule.Name );
 
 
             /*
              * 
              */
-            ObjectInstance rx = (ObjectInstance) engine.GetGlobalValue( "response" );
             object response = Activator.CreateInstance( rule.ResponseType );
 
             foreach ( var prop in rx.Properties )

@@ -16,11 +16,11 @@ form {
 
 h1 {
     background-image: url( '../img/hafnium.png' );
-    background-position: 1% 73%;
+    background-position: 10px 21px;
     background-repeat: no-repeat;
     padding-top: 30px;
     padding-bottom: 15px;
-    padding-left: 290px;
+    padding-left: 300px;
     border-bottom: 4px solid #ededed;
     font-size: 36px;
     font-weight: bold;
@@ -29,3 +29,5 @@ h1 {
 li {
     margin-bottom: 20px;
 }
+
+/* eof */

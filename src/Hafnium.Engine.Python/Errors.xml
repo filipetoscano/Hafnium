@@ -2,8 +2,16 @@
 <errors xmlns="urn:platinum/actor">
     <actor base="{Application}" />
 
-    <error id="Placeholder" actor="~.Python" code="40001">
-        <description></description>
+    <error id="CompileError" actor="~.Python" code="40001">
+        <description>Rule '{0}' failed to compile.</description>
+    </error>
+
+    <error id="ResponseNull" actor="~.Python" code="40002">
+        <description>Rule '{0}' failed to return a value.</description>
+    </error>
+
+    <error id="ResponseWrongType" actor="~.Python" code="40002">
+        <description>Rule '{0}': Script returned '{2}', but expected '{1}'.</description>
     </error>
 
 </errors>

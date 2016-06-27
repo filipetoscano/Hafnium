@@ -25,7 +25,17 @@
         /// <summary>
         /// Gets list of authors.
         /// </summary>
-        public Author[] Authors
+        public User[] Authors
+        {
+            get;
+            set;
+        }
+
+
+        /// <summary>
+        /// Gets list of (business) owners.
+        /// </summary>
+        public User[] Owners
         {
             get;
             set;

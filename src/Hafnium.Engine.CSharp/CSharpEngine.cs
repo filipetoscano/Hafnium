@@ -1,21 +1,22 @@
 ﻿using Microsoft.CSharp;
 using System;
 using System.CodeDom.Compiler;
-using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 
 namespace Hafnium.Engine.CSharp
 {
     [RuleEngine( "CSharp" )]
+    [RuleEngineContent( Extension = ".cs", Syntax = "C#", MimeType = "text/plain" )]
     public class CSharpEngine : IRuleEngine
     {
-        public object Run( IRule rule, object request )
+        public object Run( RuleContext context, object request )
         {
             #region Validations
 
-            if ( rule == null )
-                throw new ArgumentNullException( nameof( rule ) );
+            if ( context == null )
+                throw new ArgumentNullException( nameof( context ) );
 
             if ( request == null )
                 throw new ArgumentNullException( nameof( request ) );
@@ -26,7 +27,8 @@ namespace Hafnium.Engine.CSharp
             /*
              * 
              */
-            string script = File.ReadAllText( @"C:\Work\Transition\Hafnium\sample\RuleContent\Hf.Rules.Rule4.cs" );
+            IRule rule = context.Rule;
+            string script = Encoding.UTF8.GetString( context.Content );
 
 
             /*

@@ -1,18 +1,32 @@
-﻿using Microsoft.Scripting.Hosting;
+﻿using Microsoft.Scripting;
+using Microsoft.Scripting.Hosting;
 using System;
-using System.IO;
+using System.Text;
 
 namespace Hafnium.Engine.Python
 {
     [RuleEngine( "Python" )]
+    [RuleEngineContent( Extension = ".py", Syntax = "python", MimeType = "text/plain" )]
     public class PythonEngine : IRuleEngine
     {
-        public object Run( IRule rule, object request )
+        public object Run( RuleContext context, object request )
         {
+            #region Validations
+
+            if ( context == null )
+                throw new ArgumentNullException( nameof( context ) );
+
+            if ( request == null )
+                throw new ArgumentNullException( nameof( request ) );
+
+            #endregion
+
+
             /*
              * 
              */
-            string script = File.ReadAllText( @"C:\Work\Transition\Hafnium\sample\RuleContent\Hf.Rules.Rule3.py" );
+            IRule rule = context.Rule;
+            string script = Encoding.UTF8.GetString( context.Content );
 
 
             /*
@@ -23,7 +37,16 @@ namespace Hafnium.Engine.Python
             ScriptScope pys = py.CreateScope();
 
             ScriptSource src = py.CreateScriptSourceFromString( script );
-            CompiledCode compiled = src.Compile();
+            CompiledCode compiled;
+
+            try
+            {
+                compiled = src.Compile();
+            }
+            catch ( SyntaxErrorException ex )
+            {
+                throw new PythonEngineException( ER.CompileError, ex, rule.Name );
+            }
 
 
             /*
@@ -43,8 +66,11 @@ namespace Hafnium.Engine.Python
              */
             object response = pys.GetVariable( "response" );
 
+            if ( response == null )
+                throw new PythonEngineException( ER.ResponseNull, rule.Name, rule.ResponseType.FullName );
+
             if ( response.GetType() != rule.ResponseType )
-                throw new NotSupportedException();
+                throw new PythonEngineException( ER.ResponseWrongType, rule.Name, rule.ResponseType.FullName, response.GetType() );
 
             return response;
         }

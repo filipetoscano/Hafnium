@@ -2,7 +2,9 @@
 <?codebehind transformation="ToRule.xslt"?>
 <rule xmlns="urn:hafnium">
     <name>Sample Javascript rule.</name>
-    <author name="FT" email="ft@gm" />
+    <author id="X001" name="FT" email="ft@gm" />
+    <owner id="X001" name="FT" email="ft@gm" />
+    <owner id="X002" name="LT" email="lt@gm" />
 
     <request>
         <int name="Integer" />

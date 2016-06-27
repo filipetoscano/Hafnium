@@ -38,7 +38,7 @@ namespace Hf.Rules
 
         /// <summary />
         [JsonConverter( typeof( Platinum.Json.DateConverter ) )]
-        [XmlElement( "xsd:date" )]
+        [XmlElement( DataType = "date" )]
         public DateTime DateTime { get; set; }
 
         /// <summary />
@@ -50,7 +50,7 @@ namespace Hf.Rules
     /// ?
     /// </summary>
     [RuleEngine( "Javascript" )]
-    public partial class Rule2 : BaseRule, IRule<Rule2Request, Rule2Response>
+    public partial class Rule2 : ResxBaseRule, IRule<Rule2Request, Rule2Response>
     {
     }
 

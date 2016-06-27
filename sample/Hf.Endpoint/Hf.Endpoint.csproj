@@ -67,7 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\css\hf.css" />
-    <Content Include="assets\img\hafnium-62.png" />
+    <Content Include="assets\img\favicon-62.png" />
     <Content Include="assets\img\hafnium.png" />
     <Content Include="packages.config" />
     <Content Include="index.hf" />

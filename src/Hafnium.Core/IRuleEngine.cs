@@ -2,6 +2,6 @@
 {
     public interface IRuleEngine
     {
-        object Run( IRule rule, object request );
+        object Run( RuleContext context, object request );
     }
 }

@@ -2,7 +2,14 @@
 <?codebehind transformation="ToRule.xslt"?>
 <rule xmlns="urn:hafnium" xmlns:xls="urn:hafnium/excel">
     <name>Sample Excel rule.</name>
+    <description>
+        This rule is used to test whether Excel can be called as a 'rule'. It will
+        map the input parameters to cells, run .Calculate over it, and then extract
+        values from the designated cells.
+    </description>
+
     <author name="FT" email="ft@gm" />
+    <owner name="FT" email="ft@gm" />
 
     <request>
         <int name="Integer" xls:cell="API!B3" />

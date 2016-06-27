@@ -79,9 +79,42 @@ namespace Hafnium.Runtime
 
             foreach ( var ruleType in rules )
             {
+                /*
+                 * Flat structure of rules.
+                 */
                 IRule rule = Platinum.Activator.Create<IRule>( ruleType );
 
                 _rules.Add( rule );
+
+
+                /*
+                 * Grouped into services.
+                 *   1..N-1 = service namespace
+                 *   N-1    = service name
+                 *   Nth    = rule name
+                 */
+                string[] parts = ruleType.FullName.Split( '.' );
+
+                int n = parts.Length;
+                string ruleName = parts[ n - 1 ];
+                string serviceName = parts[ n - 2 ];
+                string serviceNs = string.Join( "/", parts.Take( n - 2 ).ToArray() ) + "/";
+
+                RuleService rs = _services.FirstOrDefault( s => s.Name == serviceName && s.Namespace == serviceNs );
+
+                if ( rs == null )
+                {
+                    rs = new RuleService()
+                    {
+                        Name = serviceName,
+                        Namespace = serviceNs,
+                        Rules = new Dictionary<string, IRule>()
+                    };
+
+                    _services.Add( rs );
+                }
+
+                rs.Rules.Add( ruleName, rule );
             }
         }
     }

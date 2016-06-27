@@ -1,26 +1,37 @@
 ﻿using System;
+using System.IO;
 using System.Reflection;
 
 namespace Hafnium.Engine.Excel
 {
     [RuleEngine( "Excel" )]
+    [RuleEngineContent( Extension = ".xlsx", MimeType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" )]
     public class ExcelEngine : IRuleEngine
     {
-        public object Run( IRule rule, object request )
+        public object Run( RuleContext context, object request )
         {
             #region Validations
 
-            if ( rule == null )
-                throw new ArgumentNullException( nameof( rule ) );
+            if ( context == null )
+                throw new ArgumentNullException( nameof( context ) );
 
             if ( request == null )
                 throw new ArgumentNullException( nameof( request ) );
 
             #endregion
 
+
             /*
              * 
              */
+            MemoryStream ms = new MemoryStream();
+            ms.Write( context.Content, 0, context.Content.Length );
+
+
+            /*
+             * 
+             */
+            IRule rule = context.Rule;
             object response = Activator.CreateInstance( rule.ResponseType );
 
             using ( var xls = new Spreadsheet() )
@@ -29,7 +40,7 @@ namespace Hafnium.Engine.Excel
                  * One would think that .Load would throw an error if the file isn't a
                  * valid Excel file -- but it seems to be apparently very resilient! :P
                  */
-                xls.Load( @"C:\Work\Transition\Hafnium\sample\RuleContent\Hf.Rules.Rule1.xlsx" );
+                xls.Load( ms );
                 xls.AutoCalculate = false;
 
 

@@ -71,8 +71,13 @@
     <Compile Include="Soap\SoapRequest.cs" />
     <Compile Include="Soap\SoapResponse.cs" />
     <Compile Include="Soap\SoapVersion.cs" />
+    <Compile Include="WebEndpointConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Copper\src\Zinc.WebServices\Zinc.WebServices.csproj">
+      <Project>{4c5dd63c-138c-44af-98b5-be22aefb0150}</Project>
+      <Name>Zinc.WebServices</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Hafnium.Core\Hafnium.Core.csproj">
       <Project>{f463eeb4-97f2-4107-ad6b-2b61ddd8a9ed}</Project>
       <Name>Hafnium.Core</Name>
@@ -101,6 +106,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ER.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Transforms\ToService.xslt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

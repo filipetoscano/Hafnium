@@ -18,7 +18,7 @@ namespace Hafnium.Runtime
         }
 
 
-        public IReadOnlyDictionary<string, IRule> Rules
+        public Dictionary<string, IRule> Rules
         {
             get;
             internal set;

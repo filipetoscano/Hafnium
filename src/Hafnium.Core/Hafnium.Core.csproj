@@ -33,18 +33,26 @@
     <Compile Include="..\GlobalVersion.cs">
       <Link>Properties\GlobalVersion.cs</Link>
     </Compile>
+    <Compile Include="ResxBaseRule.cs" />
     <Compile Include="BaseRule.cs" />
+    <Compile Include="IContentLoader.cs" />
     <Compile Include="IRuleEngine.cs" />
     <Compile Include="Json\DateConverter.cs" />
     <Compile Include="Json\NullableDateConverter.cs" />
     <Compile Include="Json\NullableTimeConverter.cs" />
     <Compile Include="Json\TimeConverter.cs" />
     <Compile Include="MapAttribute.cs" />
-    <Compile Include="Metadata\Author.cs" />
+    <Compile Include="Metadata\User.cs" />
     <Compile Include="Metadata\RuleMetadata.cs" />
+    <Compile Include="RuleContext.cs" />
+    <Compile Include="RuleEngineContentAttribute.cs" />
     <Compile Include="RuleEngineAttribute.cs" />
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Platinum.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Platinum.Core.1.0.0.0\lib\net46\Platinum.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />

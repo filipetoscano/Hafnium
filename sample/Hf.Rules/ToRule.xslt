@@ -96,7 +96,7 @@ namespace </xsl:text>
 
         <xsl:text>    public partial class </xsl:text>
         <xsl:value-of select=" $FileName " />
-        <xsl:text> : BaseRule, IRule&lt;</xsl:text>
+        <xsl:text> : ResxBaseRule, IRule&lt;</xsl:text>
         <xsl:value-of select=" $FileName " />
         <xsl:text>Request, </xsl:text>
         <xsl:value-of select=" $FileName " />
@@ -265,7 +265,7 @@ namespace </xsl:text>
         <xsl:text>        [JsonConverter( typeof( Platinum.Json.DateConverter ) )]</xsl:text>
         <xsl:value-of select=" $NewLine " />
 
-        <xsl:text>        [XmlElement( "xsd:date" )]</xsl:text>
+        <xsl:text>        [XmlElement( DataType = "date" )]</xsl:text>
         <xsl:value-of select=" $NewLine " />
     </xsl:template>
 

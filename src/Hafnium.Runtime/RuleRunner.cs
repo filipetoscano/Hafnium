@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Platinum;
+using System;
 using System.Reflection;
 
 namespace Hafnium.Runtime
@@ -56,6 +57,10 @@ namespace Hafnium.Runtime
             if ( request.GetType() != rule.RequestType )
                 throw new RuleRuntimeException( ER.RequestWrongType, rule.Name, rule.RequestType.FullName, request.GetType().FullName );
 
+            RuleContext ctx = new RuleContext();
+            ctx.ExecutionId = Guid.NewGuid();
+            ctx.Rule = rule;
+
 
             /*
              * 
@@ -70,11 +75,52 @@ namespace Hafnium.Runtime
             if ( engine == null )
                 throw new RuleRuntimeException( ER.EngineNotFound, rea.Name );
 
+            ctx.Engine = engine;
+
 
             /*
              * 
              */
-            object response = engine.Run( rule, request );
+            System.Collections.Specialized.NameValueCollection settings = new System.Collections.Specialized.NameValueCollection();
+            settings[ "base" ] = "~/../RuleContent";
+
+            IContentLoader loader = new ContentLoader.FilesystemContentLoader();
+            loader.Initialize( settings );
+
+            byte[] content;
+
+            try
+            {
+                content = loader.Load( ctx );
+            }
+            catch ( ActorException ex )
+            {
+                throw new RuleRuntimeException( ER.ContentFail, ex, rule.Name, rea.Name, loader.GetType().FullName );
+            }
+
+            if ( content == null )
+                throw new RuleRuntimeException( ER.ContentNull, rule.Name, rea.Name, loader.GetType().FullName );
+
+            ctx.Content = content;
+
+
+            /*
+             * 
+             */
+            object response;
+
+            try
+            {
+                response = engine.Run( ctx, request );
+            }
+            catch ( ActorException )
+            {
+                throw;
+            }
+            catch ( Exception ex )
+            {
+                throw new RuleRuntimeException( ER.EngineFail, ex, rule.Name, rea.Name );
+            }
 
             if ( response == null )
                 throw new RuleRuntimeException( ER.ResponseNull, rule.Name, rea.Name );

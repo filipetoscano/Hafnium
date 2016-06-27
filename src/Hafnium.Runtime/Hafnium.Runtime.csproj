@@ -55,6 +55,8 @@
     <Compile Include="..\GlobalVersion.cs">
       <Link>Properties\GlobalVersion.cs</Link>
     </Compile>
+    <Compile Include="ContentLoader\MssqlContentLoader.cs" />
+    <Compile Include="ContentLoader\FilesystemContentLoader.cs" />
     <Compile Include="EngineFactory.cs" />
     <Compile Include="Errors.cs">
       <DependentUpon>Errors.xml</DependentUpon>

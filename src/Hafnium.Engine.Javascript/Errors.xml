@@ -2,8 +2,12 @@
 <errors xmlns="urn:platinum/actor">
     <actor base="{Application}" />
 
-    <error id="Placeholder" actor="~.Javascript" code="30001">
-        <description></description>
+    <error id="ExecuteFailed" actor="~.Javascript" code="30001">
+        <description>Error executing Javascript for rule '{0}'.</description>
+    </error>
+
+    <error id="ResponseNull" actor="~.Javascript" code="30002">
+        <description>Rule '{0}': Null response returned from script.</description>
     </error>
 
 </errors>

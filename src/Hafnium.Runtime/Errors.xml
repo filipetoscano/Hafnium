@@ -22,4 +22,16 @@
         <description>Rule '{0}': Engine '{1}' returned '{3}', but expected '{2}'.</description>
     </error>
 
+    <error id="ContentFail" actor="~.Rule.Engine" code="10006">
+        <description>Rule '{0}': Loader '{2}' could not load content. (Engine '{1}')</description>
+    </error>
+
+    <error id="ContentNull" actor="~.Rule.Engine" code="10007">
+        <description>Rule '{0}': Loader '{2}' returned null content. (Engine '{1}')</description>
+    </error>
+
+    <error id="EngineFail" actor="~.Rule.Engine" code="10008">
+        <description>Rule '{0}': Engine '{1}' failed to run.</description>
+    </error>
+
 </errors>

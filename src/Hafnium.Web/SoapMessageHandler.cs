@@ -3,6 +3,7 @@ using Hafnium.WebServices.Soap;
 using System;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Xml;
 using System.Xml.Linq;
@@ -91,7 +92,7 @@ namespace Hafnium.WebServices
             /*
              * Derive the rule being invoked, based on the URL of the request.
              */
-            string ruleName = "";
+            string ruleName = request.SoapAction.Substring( WebEndpointConfiguration.Namespace.Length ).Replace( "/", "." );
 
 
             /*
@@ -124,10 +125,22 @@ namespace Hafnium.WebServices
              */
             object oreq;
 
-            XDocument doc = XDocument.Load( request.Message );
-            XElement element = (XElement) doc.XPathEvaluate( " /soap:Envelope/soap:Body/*[ 1 ] ", manager );
+            XDocument doc;
 
-            XmlSerializer der = new XmlSerializer( rule.RequestType );
+            using ( StringReader sr = new StringReader( request.Message ) )
+            { 
+                doc = XDocument.Load( sr );
+            }
+
+            XElement element = doc.XPathSelectElement( " /soap:Envelope/soap:Body/*[ 1 ] ", manager );
+
+            XmlAttributes xa = new XmlAttributes();
+            xa.XmlRoot = new XmlRootAttribute() { Namespace = WebEndpointConfiguration.Namespace + "Hf/" };
+
+            XmlAttributeOverrides xao = new XmlAttributeOverrides();
+            xao.Add( rule.RequestType, xa );
+
+            XmlSerializer der = new XmlSerializer( rule.RequestType, xao );
             oreq = der.Deserialize( element.CreateReader() );
 
 
@@ -142,11 +155,15 @@ namespace Hafnium.WebServices
              * 
              */
             XDocument rdoc = new XDocument();
-            doc.Add( soapNs + "Envelope" );
-            
+            //doc.Add( soapNs + "Envelope" );
 
+            StringBuilder sb = new StringBuilder();
             XmlSerializer ser = new XmlSerializer( rule.ResponseType );
-            //string resp = ser.Serialize( oresp );
+
+            using ( TextWriter tw = new StringWriter( sb ) )
+            { 
+                ser.Serialize( tw, oresp );
+            }
 
 
 
@@ -155,7 +172,7 @@ namespace Hafnium.WebServices
              */
             SoapResponse response = new SoapResponse();
             response.IsFault = false;
-            response.Message = "";
+            response.Message = sb.ToString();
 
 
             /*

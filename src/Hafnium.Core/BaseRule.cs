@@ -38,19 +38,6 @@ namespace Hafnium
 
 
         /// <summary>
-        /// Gets documentation pertinent to the present rule.
-        /// </summary>
-        public RuleMetadata Metadata
-        {
-            get
-            {
-                // TODO
-                return null;
-            }
-        }
-
-
-        /// <summary>
         /// Gets the .NET type of the request class to the present rule.
         /// </summary>
         public Type RequestType
