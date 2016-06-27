@@ -87,7 +87,7 @@ namespace Hafnium.Runtime
             IContentLoader loader = new ContentLoader.FilesystemContentLoader();
             loader.Initialize( settings );
 
-            byte[] content;
+            RuleContent content;
 
             try
             {

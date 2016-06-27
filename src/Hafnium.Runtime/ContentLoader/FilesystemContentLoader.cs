@@ -29,7 +29,7 @@ namespace Hafnium.Runtime.ContentLoader
         }
 
 
-        public byte[] Load( RuleContext context )
+        public RuleContent Load( RuleContext context )
         {
             #region Validations
 
@@ -85,7 +85,12 @@ namespace Hafnium.Runtime.ContentLoader
             /*
              * 
              */
-            return File.ReadAllBytes( path );
+            RuleContent rc = new RuleContent();
+            rc.Bytes = File.ReadAllBytes( path );
+            rc.LastModified = File.GetLastWriteTime( path );
+            rc.Version = "TODO:md5sum";
+
+            return rc;
         }
     }
 }

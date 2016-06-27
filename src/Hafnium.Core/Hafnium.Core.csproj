@@ -44,6 +44,7 @@
     <Compile Include="MapAttribute.cs" />
     <Compile Include="Metadata\User.cs" />
     <Compile Include="Metadata\RuleMetadata.cs" />
+    <Compile Include="RuleContent.cs" />
     <Compile Include="RuleContext.cs" />
     <Compile Include="RuleEngineContentAttribute.cs" />
     <Compile Include="RuleEngineAttribute.cs" />

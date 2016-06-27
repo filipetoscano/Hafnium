@@ -26,7 +26,7 @@ namespace Hafnium.Runtime.ContentLoader
         }
 
 
-        public byte[] Load( RuleContext context )
+        public RuleContent Load( RuleContext context )
         {
             #region Validations
 

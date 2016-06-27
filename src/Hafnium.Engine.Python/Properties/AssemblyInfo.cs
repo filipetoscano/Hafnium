@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 // General information
 [assembly: AssemblyTitle( "Hafnium Python" )]
-[assembly: AssemblyDescription( "" )]
+[assembly: AssemblyDescription( "Hafnium support for Python rules" )]
 [assembly: AssemblyConfiguration( "" )]
 [assembly: AssemblyCompany( "Transition" )]
 [assembly: AssemblyProduct( "Hafnium" )]

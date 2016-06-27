@@ -28,7 +28,7 @@ namespace Hafnium.Engine.CSharp
              * 
              */
             IRule rule = context.Rule;
-            string script = Encoding.UTF8.GetString( context.Content );
+            string script = context.Content.AsString();
 
 
             /*

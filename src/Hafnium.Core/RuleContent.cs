@@ -1,34 +1,34 @@
 ﻿using System;
+using System.Text;
 
 namespace Hafnium
 {
-    public class RuleContext
+    public class RuleContent
     {
-        public Guid ExecutionId
+        public string Version
         {
             get;
             set;
         }
 
 
-        public IRule Rule
+        public DateTime LastModified
         {
             get;
             set;
         }
 
 
-        public IRuleEngine Engine
+        public byte[] Bytes
         {
             get;
             set;
         }
 
 
-        public RuleContent Content
+        public string AsString()
         {
-            get;
-            set;
+            return Encoding.UTF8.GetString( this.Bytes );
         }
     }
 }

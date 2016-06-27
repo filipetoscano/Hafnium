@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 // General information
 [assembly: AssemblyTitle( "Hafnium.Web" )]
-[assembly: AssemblyDescription( "" )]
+[assembly: AssemblyDescription( "Expose Hafnium business rules as SOAP/REST web services" )]
 [assembly: AssemblyConfiguration( "" )]
 [assembly: AssemblyCompany( "Transition" )]
 [assembly: AssemblyProduct( "Hafnium" )]

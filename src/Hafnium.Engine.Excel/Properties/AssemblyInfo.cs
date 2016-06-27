@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 // General information
 [assembly: AssemblyTitle( "Hafnium Excel" )]
-[assembly: AssemblyDescription( "Run rules written in Excel" )]
+[assembly: AssemblyDescription( "Hafnium support for Excel rules" )]
 [assembly: AssemblyConfiguration( "" )]
 [assembly: AssemblyCompany( "Transition" )]
 [assembly: AssemblyProduct( "Hafnium" )]

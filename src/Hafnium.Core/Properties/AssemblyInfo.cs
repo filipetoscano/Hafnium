@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 // General information
 [assembly: AssemblyTitle( "Hafnium.Core" )]
-[assembly: AssemblyDescription( "" )]
+[assembly: AssemblyDescription( "Core components/interfaces for Hafnium rule engine." )]
 [assembly: AssemblyConfiguration( "" )]
 [assembly: AssemblyCompany( "Transition" )]
 [assembly: AssemblyProduct( "Hafnium" )]

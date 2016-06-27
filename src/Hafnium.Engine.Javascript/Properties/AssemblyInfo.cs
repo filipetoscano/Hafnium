@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 // General information
 [assembly: AssemblyTitle( "Hafnium Javascript" )]
-[assembly: AssemblyDescription( "" )]
+[assembly: AssemblyDescription( "Hafnium support for Javascript rules" )]
 [assembly: AssemblyConfiguration( "" )]
 [assembly: AssemblyCompany( "Transition" )]
 [assembly: AssemblyProduct( "Hafnium" )]

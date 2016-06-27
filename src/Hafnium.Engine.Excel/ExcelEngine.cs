@@ -25,7 +25,7 @@ namespace Hafnium.Engine.Excel
              * 
              */
             MemoryStream ms = new MemoryStream();
-            ms.Write( context.Content, 0, context.Content.Length );
+            ms.Write( context.Content.Bytes, 0, context.Content.Bytes.Length );
 
 
             /*

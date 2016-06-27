@@ -26,7 +26,7 @@ namespace Hafnium.Engine.Python
              * 
              */
             IRule rule = context.Rule;
-            string script = Encoding.UTF8.GetString( context.Content );
+            string script = context.Content.AsString();
 
 
             /*

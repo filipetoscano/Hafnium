@@ -2,6 +2,9 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="help">
     <PropertyGroup>
         <version>1.0.0.0</version>
+
+        <nugetSource>http://localhost:5000/</nugetSource>
+        <nugetPushKey></nugetPushKey>
     </PropertyGroup>
 
 
@@ -20,6 +23,7 @@
     ~ 
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
     <Target Name="clean">
+        <MSBuild Projects="Hafnium.sln" Properties="Configuration=Release" Targets="Clean" />
     </Target>
 
 
@@ -37,6 +41,45 @@
         <WriteLinesToFile Overwrite="true" File="src\GlobalVersion.cs" Lines="$(versionInfo)" />
         <Exec Command=" nuget restore " />
         <MSBuild Projects="Hafnium.sln" Properties="Configuration=Release" />
+    </Target>
+
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ~ 
+    ~ pack/
+    ~ Build the nuget packages.
+    ~ 
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <Target Name="package">
+        <PropertyGroup>
+            <nugetpackFlags>-IncludeReferencedProjects -Prop Configuration=Release -OutputDirectory build</nugetpackFlags>
+        </PropertyGroup>
+        
+        <Exec Command=" nuget pack src\Hafnium.Core\Hafnium.Core.csproj $(nugetpackFlags) " />
+        <Exec Command=" nuget pack src\Hafnium.Engine.CSharp\Hafnium.Engine.CSharp.csproj $(nugetpackFlags) " />
+        <Exec Command=" nuget pack src\Hafnium.Engine.Excel\Hafnium.Engine.Excel.csproj $(nugetpackFlags) " />
+        <Exec Command=" nuget pack src\Hafnium.Engine.Javascript\Hafnium.Engine.Javascript.csproj $(nugetpackFlags) " />
+        <Exec Command=" nuget pack src\Hafnium.Engine.Python\Hafnium.Engine.Python.csproj $(nugetpackFlags) " />
+        <Exec Command=" nuget pack src\Hafnium.Runtime\Hafnium.Runtime.csproj $(nugetpackFlags) " />
+        <Exec Command=" nuget pack src\Hafnium.Web\Hafnium.WebServices.csproj $(nugetpackFlags) " />
+    </Target>
+
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ~ 
+    ~ push/
+    ~ Push onto the nuget server.
+    ~ 
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <Target Name="push">
+        <Error Condition=" $(nugetPushKey) == '' " Text="Must specify 'nugetPushKey' when pushing to nuget source." />
+        <Exec Command=" nuget pack -s $(nugetSource) $(nugetPushKey) src\Hafnium.Core\Hafnium.Core.$(Version).nupkg " />
+        <Exec Command=" nuget pack -s $(nugetSource) $(nugetPushKey) src\Hafnium.Engine.CSharp\Hafnium.Engine.CSharp.$(Version).nupkg  " />
+        <Exec Command=" nuget pack -s $(nugetSource) $(nugetPushKey) src\Hafnium.Engine.Excel\Hafnium.Engine.Excel.$(Version).nupkg " />
+        <Exec Command=" nuget pack -s $(nugetSource) $(nugetPushKey) src\Hafnium.Engine.Javascript\Hafnium.Engine.Javascript.$(Version).nupkg " />
+        <Exec Command=" nuget pack -s $(nugetSource) $(nugetPushKey) src\Hafnium.Engine.Python\Hafnium.Engine.Python.$(Version).nupkg " />
+        <Exec Command=" nuget pack -s $(nugetSource) $(nugetPushKey) src\Hafnium.Runtime\Hafnium.Runtime.$(Version).nupkg " />
+        <Exec Command=" nuget pack -s $(nugetSource) $(nugetPushKey) src\Hafnium.Web\Hafnium.Web.$(Version).nupkg " />
     </Target>
 
 </Project>

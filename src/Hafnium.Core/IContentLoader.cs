@@ -16,6 +16,6 @@ namespace Hafnium
         /// </summary>
         /// <param name="context">Rule execution context.</param>
         /// <returns>Content, as a byte array.</returns>
-        byte[] Load( RuleContext context );
+        RuleContent Load( RuleContext context );
     }
 }
