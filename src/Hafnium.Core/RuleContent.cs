@@ -5,6 +5,9 @@ namespace Hafnium
 {
     public class RuleContent
     {
+        /// <summary>
+        /// Gets or sets the version of the rule content.
+        /// </summary>
         public string Version
         {
             get;
@@ -12,6 +15,9 @@ namespace Hafnium
         }
 
 
+        /// <summary>
+        /// Gets or sets the moment in which the file was last modified.
+        /// </summary>
         public DateTime LastModified
         {
             get;
@@ -19,6 +25,9 @@ namespace Hafnium
         }
 
 
+        /// <summary>
+        /// Gets or sets the rule content.
+        /// </summary>
         public byte[] Bytes
         {
             get;
@@ -26,6 +35,10 @@ namespace Hafnium
         }
 
 
+        /// <summary>
+        /// Gets the rule content as a character sequence.
+        /// </summary>
+        /// <returns>String content.</returns>
         public string AsString()
         {
             return Encoding.UTF8.GetString( this.Bytes );

@@ -1,4 +1,5 @@
 ﻿using Platinum.Resolver;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -8,6 +9,10 @@ using System.Xml.XPath;
 
 namespace Hafnium
 {
+    /// <summary>
+    /// Base class for rules where we load the metadata from the same XML
+    /// where the API is defined.
+    /// </summary>
     public abstract class ResxBaseRule : BaseRule, IRule
     {
         private RuleMetadata _metadata;
@@ -45,6 +50,10 @@ namespace Hafnium
         }
 
 
+        /// <summary>
+        /// Load the metadata from the embedded XML resource file.
+        /// </summary>
+        /// <returns>Metadata for the current rule.</returns>
         private RuleMetadata MetadataLoad()
         {
             /*
@@ -107,7 +116,7 @@ namespace Hafnium
              */
             List<User> authors = new List<User>();
 
-            foreach ( XElement authorElem in (IEnumerable<XElement>) doc.XPathEvaluate( " /hf:rule/hf:author ", manager ) )
+            foreach ( XElement authorElem in (IEnumerable) doc.XPathEvaluate( " /hf:rule/hf:author ", manager ) )
             {
                 User u = new User();
                 u.Id = authorElem.Attribute( "id" )?.Value;
@@ -125,7 +134,7 @@ namespace Hafnium
              */
             List<User> owners = new List<User>();
 
-            foreach ( XElement ownerElem in (IEnumerable<XElement>) doc.XPathEvaluate( " /hf:rule/hf:owner ", manager ) )
+            foreach ( XElement ownerElem in (IEnumerable) doc.XPathEvaluate( " /hf:rule/hf:owner ", manager ) )
             {
                 User u = new User();
                 u.Id = ownerElem.Attribute( "id" )?.Value;

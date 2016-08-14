@@ -2,6 +2,9 @@
 
 namespace Hafnium
 {
+    /// <summary>
+    /// Describes a rule.
+    /// </summary>
     public interface IRule
     {
         /// <summary>
@@ -40,6 +43,11 @@ namespace Hafnium
     }
 
 
+    /// <summary>
+    /// Describes a rule.
+    /// </summary>
+    /// <typeparam name="Rq">Type of request message.</typeparam>
+    /// <typeparam name="Rp">Type of response message.</typeparam>
     public interface IRule<Rq,Rp> : IRule
     {
     }

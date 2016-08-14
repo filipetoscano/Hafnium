@@ -38,6 +38,16 @@ namespace Hafnium
 
 
         /// <summary>
+        /// Gets or sets the name of the variant.
+        /// </summary>
+        public string Variant
+        {
+            get;
+            set;
+        }
+
+
+        /// <summary>
         /// Gets the .NET type of the request class to the present rule.
         /// </summary>
         public Type RequestType

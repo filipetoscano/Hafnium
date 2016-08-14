@@ -63,6 +63,7 @@ namespace Hafnium.WebServices
 
             if ( request == null )
             {
+                context.Response.TrySkipIisCustomErrors = true;
                 context.Response.StatusCode = 500;
                 context.Response.CacheControl = "private";
                 context.Response.ContentType = "text/xml; charset=utf-8";
@@ -75,7 +76,7 @@ namespace Hafnium.WebServices
       </s:Fault>
    </s:Body>
 </s:Envelope>" );
-                context.Response.End();
+                return;
             }
 
 
@@ -128,7 +129,7 @@ namespace Hafnium.WebServices
             XDocument doc;
 
             using ( StringReader sr = new StringReader( request.Message ) )
-            { 
+            {
                 doc = XDocument.Load( sr );
             }
 
@@ -147,7 +148,9 @@ namespace Hafnium.WebServices
             /*
              * 
              */
-            object oresp = rr.Run( rule, oreq );
+            object oresp;
+
+            oresp = rr.Run( rule, oreq );
 
 
 
@@ -161,7 +164,7 @@ namespace Hafnium.WebServices
             XmlSerializer ser = new XmlSerializer( rule.ResponseType );
 
             using ( TextWriter tw = new StringWriter( sb ) )
-            { 
+            {
                 ser.Serialize( tw, oresp );
             }
 
@@ -189,7 +192,7 @@ namespace Hafnium.WebServices
                 context.Response.ContentType = "text/xml; charset=utf-8";
 
                 context.Response.Write( response.Message );
-                context.Response.End();
+                return;
             }
 
             if ( request.Version == SoapVersion.Soap12 )
@@ -203,7 +206,7 @@ namespace Hafnium.WebServices
                 context.Response.ContentType = "application/soap+xml; charset=utf-8";
 
                 context.Response.Write( response.Message );
-                context.Response.End();
+                return;
             }
         }
 

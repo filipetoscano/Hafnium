@@ -2,6 +2,10 @@
 
 namespace Hafnium
 {
+    /// <summary>
+    /// Describes a component which can load the content of a given
+    /// rule.
+    /// </summary>
     public interface IContentLoader
     {
         /// <summary>

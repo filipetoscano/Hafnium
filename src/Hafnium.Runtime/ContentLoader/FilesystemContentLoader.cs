@@ -74,9 +74,18 @@ namespace Hafnium.Runtime.ContentLoader
             /*
              * 
              */
-            string path = Path.Combine(
-                baseDir,
-                context.Rule.Name + extension );
+            string fileName;
+
+            if ( context.RuleVariant == null )
+                fileName = context.Rule.Name + extension;
+            else
+                fileName = context.Rule.Name + "-" + context.RuleVariant + extension;
+
+
+            /*
+             * 
+             */
+            string path = Path.Combine( baseDir, fileName );
 
             if ( File.Exists( path ) == false )
                 return null;

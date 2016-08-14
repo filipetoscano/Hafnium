@@ -12,6 +12,10 @@ namespace Hf.Rules
     public class Rule2Request
     {
         /// <summary />
+        [Variant( 0 )]
+        public string Variant { get; set; }
+
+        /// <summary />
         public int Integer { get; set; }
 
         /// <summary />

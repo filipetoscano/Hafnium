@@ -12,7 +12,6 @@
 
     <xsl:output method="text" indent="yes" />
 
-    <xsl:variable name="fwk-ns" select=" 'http://copper.com/fwk/' " />
     <xsl:variable name="NewLine">
         <xsl:text>
 </xsl:text>
@@ -126,6 +125,7 @@ namespace </xsl:text>
         <xsl:apply-templates select=" . " mode="prop-rule" />
         <xsl:apply-templates select=" . " mode="type-attr" />
         <xsl:apply-templates select=" . " mode="rmap-attr" />
+        <xsl:apply-templates select=" . " mode="vari-attr" />
         <xsl:text>        public </xsl:text>
         <xsl:apply-templates select=" . " mode="type" />
         <xsl:text> </xsl:text>
@@ -281,8 +281,6 @@ namespace </xsl:text>
     <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     ~
     ~ hf:* / mode=rmap-attr
-    ~ Responsible for returning all .NET attributes which need to markup
-    ~ a property of the given type.
     ~
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
     <xsl:template match=" *[ @xls:cell ] " mode="rmap-attr">
@@ -291,7 +289,19 @@ namespace </xsl:text>
         <xsl:text>" )]</xsl:text>
         <xsl:value-of select=" $NewLine " />
     </xsl:template>
-    
+
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ~
+    ~ hf:* / mode=vari-attr
+    ~
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <xsl:template match=" *[ @variant = 'true' ] " mode="vari-attr">
+        <xsl:text>        [Variant( </xsl:text>
+        <xsl:value-of select=" count( preceding-sibling::*[ @variant = 'true' ] ) " />
+        <xsl:text> )]</xsl:text>
+        <xsl:value-of select=" $NewLine " />
+    </xsl:template>
 
 
     <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

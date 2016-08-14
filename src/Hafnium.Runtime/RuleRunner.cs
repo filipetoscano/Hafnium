@@ -1,5 +1,8 @@
 ﻿using Platinum;
 using System;
+using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Linq;
 using System.Reflection;
 
 namespace Hafnium.Runtime
@@ -81,7 +84,41 @@ namespace Hafnium.Runtime
             /*
              * 
              */
-            System.Collections.Specialized.NameValueCollection settings = new System.Collections.Specialized.NameValueCollection();
+            List<Tuple<int, string>> variantTuples = new List<Tuple<int, string>>();
+
+            foreach ( PropertyInfo prop in request.GetType().GetProperties() )
+            {
+                VariantAttribute variantAttr = prop.GetCustomAttribute<VariantAttribute>();
+
+                if ( variantAttr == null )
+                    continue;
+
+                object v = prop.GetValue( request );
+
+                if ( v == null )
+                    continue;
+
+                string sv = v.ToString();
+
+                variantTuples.Add( new Tuple<int, string>( variantAttr.Position, sv ) );
+            }
+
+            if ( variantTuples.Count == 1 )
+            {
+                ctx.RuleVariant = variantTuples[ 0 ].Item2;
+            }
+            else if ( variantTuples.Count > 0 )
+            {
+                ctx.RuleVariant = string.Join( "-", variantTuples.OrderBy( x => x.Item1 )
+                                                                 .Select( x => x.Item2 )
+                                                                 .ToArray() );
+            }
+
+
+            /*
+             * TODO: Load from factory
+             */
+            NameValueCollection settings = new NameValueCollection();
             settings[ "base" ] = "~/../RuleContent";
 
             IContentLoader loader = new ContentLoader.FilesystemContentLoader();

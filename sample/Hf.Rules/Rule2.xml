@@ -7,6 +7,7 @@
     <owner id="X002" name="LT" email="lt@gm" />
 
     <request>
+        <string name="Variant" variant="true" />
         <int name="Integer" />
         <decimal name="Decimal" />
         <string name="String" />
