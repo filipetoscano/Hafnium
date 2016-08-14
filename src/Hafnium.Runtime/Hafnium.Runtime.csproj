@@ -43,6 +43,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -54,6 +55,12 @@
   <ItemGroup>
     <Compile Include="..\GlobalVersion.cs">
       <Link>Properties\GlobalVersion.cs</Link>
+    </Compile>
+    <Compile Include="Configuration-Partial.cs" />
+    <Compile Include="Configuration.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Configuration.xml</DependentUpon>
     </Compile>
     <Compile Include="ContentLoader\MssqlContentLoader.cs" />
     <Compile Include="ContentLoader\FilesystemContentLoader.cs" />
@@ -96,6 +103,18 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ER.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ContentLoader\MssqlLoadRule.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ContentLoader\MssqlLoadVariant.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Configuration.xml">
+      <Generator>YConfigGenTool</Generator>
+      <LastGenOutput>Configuration.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

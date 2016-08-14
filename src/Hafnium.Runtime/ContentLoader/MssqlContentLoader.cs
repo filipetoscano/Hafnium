@@ -1,28 +1,37 @@
-﻿using System;
+﻿using Platinum.Data;
+using System;
 using System.Collections.Specialized;
+using System.Linq;
+using Dapper;
+using Platinum.Configuration;
 
 namespace Hafnium.Runtime.ContentLoader
 {
     public class MssqlContentLoader : IContentLoader
     {
-        private NameValueCollection Settings
-        {
-            get;
-            set;
-        }
+        private string _connectionName;
 
 
         public void Initialize( NameValueCollection settings )
         {
-            this.Settings = new NameValueCollection();
+            #region Validations
 
-            if ( settings != null )
-            {
-                foreach ( string k in settings )
-                {
-                    this.Settings.Set( k, settings.Get( k ) );
-                }
-            }
+            if ( settings == null )
+                throw new ArgumentNullException( nameof( settings ) );
+
+            #endregion
+
+
+            /*
+             * ConnectionName
+             */
+            _connectionName = settings[ "ConnectionName" ];
+
+            if ( string.IsNullOrEmpty( _connectionName ) == true )
+                throw new RuleRuntimeConfigurationException( ER.MssqlContentLoader_ConnectionName_Missing );
+
+            if ( AppConfiguration.ConnectionStrings[ _connectionName ] == null )
+                throw new RuleRuntimeConfigurationException( ER.MssqlContentLoader_ConnectionName_NotDefined, _connectionName );
         }
 
 
@@ -41,7 +50,26 @@ namespace Hafnium.Runtime.ContentLoader
 
             #endregion
 
-            throw new NotImplementedException();
+            DataConnection db = Db.Connection( _connectionName );
+            RuleContent rc;
+
+            if ( context.RuleVariant == null )
+            {
+                rc = db.Query<RuleContent>( Db.Sql( "ContentLoader/MssqlLoadRule" ), new
+                {
+                    RuleName = context.Rule.Name,
+                } ).FirstOrDefault();
+            }
+            else
+            {
+                rc = db.Query<RuleContent>( Db.Sql( "ContentLoader/MssqlLoadVariant" ), new
+                {
+                    RuleName = context.Rule.Name,
+                    RuleVariant = context.RuleVariant
+                } ).FirstOrDefault();
+            }
+
+            return rc;
         }
     }
 }

@@ -339,7 +339,7 @@ namespace Hafnium.WebServices
             /*
              * 
              */
-            string serviceNs = WebEndpointConfiguration.Namespace + service.Namespace;
+            string serviceNs = WebServicesConfiguration.Current.Namespace + service.Namespace;
 
 
             /*

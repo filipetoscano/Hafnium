@@ -7,25 +7,40 @@ namespace Hafnium.Runtime.ContentLoader
 {
     public class FilesystemContentLoader : IContentLoader
     {
-        private NameValueCollection Settings
-        {
-            get;
-            set;
-        }
+        private string _baseDir;
 
 
         public void Initialize( NameValueCollection settings )
         {
-            this.Settings = new NameValueCollection();
-            this.Settings[ "base" ] = "~/../Rules";
+            #region Validations
 
-            if ( settings != null )
+            if ( settings == null )
+                throw new ArgumentNullException( nameof( settings ) );
+
+            #endregion
+
+
+            /*
+             * RuleDirectory
+             */
+            string baseDir = settings[ "RuleDirectory" ];
+
+            if ( string.IsNullOrEmpty( baseDir ) == true )
+                throw new RuleRuntimeConfigurationException( ER.FilesystemContentLoader_RuleDirectory_Missing ); 
+
+            if ( baseDir.StartsWith( "~/", StringComparison.Ordinal ) == true )
             {
-                foreach ( string k in settings )
-                {
-                    this.Settings.Set( k, settings.Get( k ) );
-                }
+                string root = AppDomain.CurrentDomain.BaseDirectory;
+
+                baseDir = Path.Combine(
+                    AppDomain.CurrentDomain.BaseDirectory,
+                    baseDir.Substring( 2 ) );
             }
+
+            if ( Directory.Exists( baseDir ) == false )
+                throw new RuleRuntimeConfigurationException( ER.FilesystemContentLoader_RuleDirectory_NotExists, baseDir );
+
+            _baseDir = baseDir;
         }
 
 
@@ -59,21 +74,6 @@ namespace Hafnium.Runtime.ContentLoader
             /*
              * 
              */
-            string baseDir = this.Settings[ "base" ];
-
-            if ( baseDir.StartsWith( "~/", StringComparison.Ordinal ) == true )
-            {
-                string root = AppDomain.CurrentDomain.BaseDirectory;
-
-                baseDir = Path.Combine(
-                    AppDomain.CurrentDomain.BaseDirectory,
-                    baseDir.Substring( 2 ) );
-            }
-
-
-            /*
-             * 
-             */
             string fileName;
 
             if ( context.RuleVariant == null )
@@ -85,7 +85,7 @@ namespace Hafnium.Runtime.ContentLoader
             /*
              * 
              */
-            string path = Path.Combine( baseDir, fileName );
+            string path = Path.Combine( _baseDir, fileName );
 
             if ( File.Exists( path ) == false )
                 return null;

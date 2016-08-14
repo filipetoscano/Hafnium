@@ -39,6 +39,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
@@ -51,6 +52,11 @@
   <ItemGroup>
     <Compile Include="..\GlobalVersion.cs">
       <Link>Properties\GlobalVersion.cs</Link>
+    </Compile>
+    <Compile Include="Configuration.cs">
+      <DependentUpon>Configuration.xml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="DocumentationHandler.cs" />
     <Compile Include="Errors.cs">
@@ -71,7 +77,6 @@
     <Compile Include="Soap\SoapRequest.cs" />
     <Compile Include="Soap\SoapResponse.cs" />
     <Compile Include="Soap\SoapVersion.cs" />
-    <Compile Include="WebEndpointConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Copper\src\Zinc.WebServices\Zinc.WebServices.csproj">
@@ -109,6 +114,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Transforms\ToService.xslt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Configuration.xml">
+      <Generator>YConfigGenTool</Generator>
+      <LastGenOutput>Configuration.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

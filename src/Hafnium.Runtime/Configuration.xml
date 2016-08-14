@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<configuration xmlns="urn:yttrium/vs/config">
+
+    <section name="hafnium/runtime" type="RuntimeConfiguration">
+        <element name="content" as="ContentLoader" type="RuntimeLoaderConfiguration">
+            <string name="loader" as="LoaderMoniker" />
+        </element>
+    </section>
+
+</configuration>

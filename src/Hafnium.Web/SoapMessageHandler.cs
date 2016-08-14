@@ -93,7 +93,7 @@ namespace Hafnium.WebServices
             /*
              * Derive the rule being invoked, based on the URL of the request.
              */
-            string ruleName = request.SoapAction.Substring( WebEndpointConfiguration.Namespace.Length ).Replace( "/", "." );
+            string ruleName = request.SoapAction.Substring( WebServicesConfiguration.Current.Namespace.Length ).Replace( "/", "." );
 
 
             /*
@@ -136,7 +136,7 @@ namespace Hafnium.WebServices
             XElement element = doc.XPathSelectElement( " /soap:Envelope/soap:Body/*[ 1 ] ", manager );
 
             XmlAttributes xa = new XmlAttributes();
-            xa.XmlRoot = new XmlRootAttribute() { Namespace = WebEndpointConfiguration.Namespace + "Hf/" };
+            xa.XmlRoot = new XmlRootAttribute() { Namespace = WebServicesConfiguration.Current.Namespace + "Hf/" };
 
             XmlAttributeOverrides xao = new XmlAttributeOverrides();
             xao.Add( rule.RequestType, xa );

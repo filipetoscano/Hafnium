@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<configuration xmlns="urn:yttrium/vs/config">
+
+    <section name="hafnium/webServices" type="WebServicesConfiguration">
+        <string name="namespace" as="Namespace" />
+    </section>
+
+</configuration>

@@ -1,7 +1,6 @@
 ﻿using Platinum;
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Linq;
 using System.Reflection;
 
@@ -116,13 +115,10 @@ namespace Hafnium.Runtime
 
 
             /*
-             * TODO: Load from factory
+             *
              */
-            NameValueCollection settings = new NameValueCollection();
-            settings[ "base" ] = "~/../RuleContent";
-
-            IContentLoader loader = new ContentLoader.FilesystemContentLoader();
-            loader.Initialize( settings );
+            IContentLoader loader = Platinum.Activator.Create<IContentLoader>( RuntimeConfiguration.Current.ContentLoader.LoaderMoniker );
+            loader.Initialize( RuntimeConfiguration.Current.ContentLoader.ToNvcSettings() );
 
             RuleContent content;
 
