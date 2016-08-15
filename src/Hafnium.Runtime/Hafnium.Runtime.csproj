@@ -56,6 +56,7 @@
     <Compile Include="..\GlobalVersion.cs">
       <Link>Properties\GlobalVersion.cs</Link>
     </Compile>
+    <Compile Include="AppDomainExtensions.cs" />
     <Compile Include="Configuration-Partial.cs" />
     <Compile Include="Configuration.cs">
       <AutoGen>True</AutoGen>

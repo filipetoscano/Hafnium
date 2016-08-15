@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace Hafnium.Runtime
 {
@@ -10,6 +11,7 @@ namespace Hafnium.Runtime
         private static bool _init = false;
         private static List<RuleService> _services;
         private static List<IRule> _rules;
+        private static Type _irule = typeof( IRule );
 
 
         public static IReadOnlyCollection<RuleService> Services
@@ -65,17 +67,52 @@ namespace Hafnium.Runtime
 
 
             /*
-             * How many years did it take, to finally be able to write 'irule' in code? :P
+             * 
              */
-            Type irule = typeof( IRule );
+            AppDomain.CurrentDomain.PreLoadDeployedAssemblies();
 
-            var rules = AppDomain.CurrentDomain
-                .GetAssemblies()
-                .Where( a => !a.IsDynamic )
-                .SelectMany( a => a.GetExportedTypes() )
+
+            /*
+             *
+             */
+            foreach ( var assembly in AppDomain.CurrentDomain.GetAssemblies() )
+            {
+                if ( assembly.IsDynamic == true )
+                    continue;
+
+                if ( assembly.FullName.StartsWith( "Microsoft." ) == true )
+                    continue;
+
+                if ( assembly.FullName.StartsWith( "System." ) == true )
+                    continue;
+
+                if ( assembly.FullName.StartsWith( "System, " ) == true )
+                    continue;
+
+                if ( assembly.FullName.StartsWith( "mscorlib." ) == true )
+                    continue;
+
+                if ( assembly.FullName.StartsWith( "mscorlib, " ) == true )
+                    continue;
+
+                ImportAssembly( assembly );
+            }
+        }
+
+
+        private static void ImportAssembly( Assembly assembly )
+        {
+            #region Validations
+
+            if ( assembly == null )
+                throw new ArgumentNullException( nameof( assembly ) );
+
+            #endregion
+
+            var rules = assembly.GetExportedTypes()
                 .Where( t => t.IsAbstract == false )
                 .Where( t => t.IsInterface == false )
-                .Where( t => irule.IsAssignableFrom( t ) );
+                .Where( t => _irule.IsAssignableFrom( t ) );
 
             foreach ( var ruleType in rules )
             {

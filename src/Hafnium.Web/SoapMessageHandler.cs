@@ -1,14 +1,17 @@
 ﻿using Hafnium.Runtime;
 using Hafnium.WebServices.Soap;
+using Platinum;
 using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Web;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 using System.Xml.XPath;
+using Zinc.WebServices;
 
 namespace Hafnium.WebServices
 {
@@ -22,6 +25,14 @@ namespace Hafnium.WebServices
                 throw new ArgumentNullException( "context" );
 
             #endregion
+
+
+            /*
+             * 
+             */
+            ExecutionHeader execution = new ExecutionHeader();
+            execution.ExecutionId = Guid.NewGuid();
+            execution.MomentStart = DateTime.UtcNow;
 
 
             /*
@@ -63,21 +74,27 @@ namespace Hafnium.WebServices
 
             if ( request == null )
             {
-                context.Response.TrySkipIisCustomErrors = true;
-                context.Response.StatusCode = 500;
-                context.Response.CacheControl = "private";
-                context.Response.ContentType = "text/xml; charset=utf-8";
-                context.Response.Write( @"<s:Envelope xmlns:s='http://schemas.xmlsoap.org/soap/envelope/'>
-   <s:Header />
-   <s:Body>
-      <s:Fault>
-         <faultcode>s:Client</faultcode>
-         <faultstring>Was that SOAP? You sure? :)</faultstring>
-      </s:Fault>
-   </s:Body>
-</s:Envelope>" );
+                ActorException error = new WebException( ER.Soap_RequestNotSoap );
+
+                var fault = ToFault( request.Version, execution, error );
+                ResponseEmit( context, fault );
                 return;
             }
+
+
+            /*
+             * Derive the rule being invoked, based on the URL of the request.
+             */
+            if ( request.SoapAction.StartsWith( WebServicesConfiguration.Current.Namespace ) == false )
+            {
+                ActorException error = new WebException( ER.Soap_ActionUnsupported, request.SoapAction, WebServicesConfiguration.Current.Namespace );
+
+                var fault = ToFault( request.Version, execution, error );
+                ResponseEmit( context, fault );
+                return;
+            }
+
+            string ruleName = request.SoapAction.Substring( WebServicesConfiguration.Current.Namespace.Length ).Replace( "/", "." );
 
 
             /*
@@ -91,9 +108,10 @@ namespace Hafnium.WebServices
 
 
             /*
-             * Derive the rule being invoked, based on the URL of the request.
+             * Service NS - derived from the name of the rule :)
              */
-            string ruleName = request.SoapAction.Substring( WebServicesConfiguration.Current.Namespace.Length ).Replace( "/", "." );
+            string[] parts = ruleName.Split( '.' );
+            string serviceNs = string.Join( "/", parts.Take( parts.Length - 2 ) ) + "/";
 
 
             /*
@@ -101,6 +119,15 @@ namespace Hafnium.WebServices
              */
             RuleRunner rr = new RuleRunner();
             IRule rule = rr.Get( ruleName );
+
+            if ( rule == null )
+            {
+                ActorException error = new WebException( ER.Soap_ActionUnknown, request.SoapAction );
+
+                var fault = ToFault( request.Version, execution, error );
+                ResponseEmit( context, fault );
+                return;
+            }
 
 
             /*
@@ -113,101 +140,287 @@ namespace Hafnium.WebServices
             else
                 soapNs = "http://www.w3.org/2003/05/soap-envelope";
 
-
-            /*
-             * 
-             */
             XmlNamespaceManager manager = new XmlNamespaceManager( new NameTable() );
             manager.AddNamespace( "soap", soapNs.NamespaceName );
+
+
+            /*
+             *
+             */
+            XDocument requestDoc;
+
+            try
+            {
+                using ( StringReader sr = new StringReader( request.Message ) )
+                {
+                    requestDoc = XDocument.Load( sr );
+                }
+            }
+            catch ( XmlException ex )
+            {
+                ActorException error = new WebException( ER.Soap_RequestNotXml, ex );
+
+                var fault = ToFault( request.Version, execution, error );
+                ResponseEmit( context, fault );
+                return;
+            }
+
+            XElement element = requestDoc.XPathSelectElement( " /soap:Envelope/soap:Body/*[ 1 ] ", manager );
+
+            if ( element == null )
+            {
+                ActorException error = new WebException( ER.Soap_BodyNotFound );
+
+                var fault = ToFault( request.Version, execution, error );
+                ResponseEmit( context, fault );
+                return;
+            }
 
 
             /*
              * 
              */
             object oreq;
+            XmlSerializer der = XmlSerializerFor( rule.RequestType, serviceNs );
 
-            XDocument doc;
-
-            using ( StringReader sr = new StringReader( request.Message ) )
+            try
             {
-                doc = XDocument.Load( sr );
+                oreq = der.Deserialize( element.CreateReader() );
             }
+            catch ( InvalidOperationException ex )
+            {
+                ActorException error = new WebException( ER.Soap_RequestInvalid, ex, rule.Name, rule.RequestType.FullName );
 
-            XElement element = doc.XPathSelectElement( " /soap:Envelope/soap:Body/*[ 1 ] ", manager );
-
-            XmlAttributes xa = new XmlAttributes();
-            xa.XmlRoot = new XmlRootAttribute() { Namespace = WebServicesConfiguration.Current.Namespace + "Hf/" };
-
-            XmlAttributeOverrides xao = new XmlAttributeOverrides();
-            xao.Add( rule.RequestType, xa );
-
-            XmlSerializer der = new XmlSerializer( rule.RequestType, xao );
-            oreq = der.Deserialize( element.CreateReader() );
+                var fault = ToFault( request.Version, execution, error );
+                ResponseEmit( context, fault );
+                return;
+            }
 
 
             /*
              * 
              */
-            object oresp;
+            SoapResponse response;
 
-            oresp = rr.Run( rule, oreq );
+            try
+            {
+                object oresp;
 
+                oresp = rr.Run( rule, oreq );
+
+                response = ToResponse( request.Version, execution, oresp, serviceNs );
+            }
+            catch ( ActorException ex )
+            {
+                response = ToFault( request.Version, execution, ex );
+            }
+            catch ( Exception ex )
+            {
+                ActorException aex = new WebException( ER.Soap_UnhandledException, ex );
+
+                response = ToFault( request.Version, execution, aex );
+            }
 
 
             /*
              * 
              */
-            XDocument rdoc = new XDocument();
-            //doc.Add( soapNs + "Envelope" );
+            ResponseEmit( context, response );
+            return;
+        }
 
-            StringBuilder sb = new StringBuilder();
-            XmlSerializer ser = new XmlSerializer( rule.ResponseType );
 
-            using ( TextWriter tw = new StringWriter( sb ) )
+        private static SoapResponse ToResponse( SoapVersion version, ExecutionHeader execution, object response, string serviceNs )
+        {
+            /*
+             * 
+             */
+            XNamespace soapNs;
+
+            if ( version == SoapVersion.Soap11 )
+                soapNs = "http://schemas.xmlsoap.org/soap/envelope/";
+            else
+                soapNs = "http://www.w3.org/2003/05/soap-envelope";
+
+
+            /*
+             * 
+             */
+            XDocument responseDoc = new XDocument();
+
+            var envelope = new XElement( soapNs + "Envelope" );
+            envelope.Add( new XAttribute( XNamespace.Xmlns + "soap", soapNs.NamespaceName ) );
+
+            var header = new XElement( soapNs + "Header" );
+            var body = new XElement( soapNs + "Body" );
+
+            envelope.Add( header, body );
+            responseDoc.Add( envelope );
+
+
+            /*
+             * 
+             */
+            execution.MomentEnd = DateTime.UtcNow;
+
+            XmlSerializer serHeader = new XmlSerializer( typeof( ExecutionHeader ) );
+            header.Add( serHeader.SerializeAsXElement( execution ) );
+
+
+            /*
+             * 
+             */
+            Type t = response.GetType();
+
+            XmlSerializer serBody = XmlSerializerFor( t, serviceNs );
+            body.Add( serBody.SerializeAsXElement( response ) );
+
+
+            /*
+             * 
+             */
+            SoapResponse resp = new SoapResponse();
+            resp.Version = version;
+            resp.IsFault = false;
+            resp.Message = responseDoc.ToString( SaveOptions.DisableFormatting );
+
+            return resp;
+        }
+
+
+        private static SoapResponse ToFault( SoapVersion version, ExecutionHeader execution, ActorException exception )
+        {
+            #region Validations
+
+            if ( execution == null )
+                throw new ArgumentNullException( nameof( execution ) );
+
+            if ( exception == null )
+                throw new ArgumentNullException( nameof( exception ) );
+
+            #endregion
+
+
+            /*
+             * 
+             */
+            XNamespace fwkNs = "https://github.com/filipetoscano/Zinc";
+            XNamespace soapNs;
+
+            if ( version == SoapVersion.Soap11 )
+                soapNs = "http://schemas.xmlsoap.org/soap/envelope/";
+            else
+                soapNs = "http://www.w3.org/2003/05/soap-envelope";
+
+            XDocument responseDoc = new XDocument();
+
+            var envelope = new XElement( soapNs + "Envelope" );
+            envelope.Add( new XAttribute( XNamespace.Xmlns + "soap", soapNs.NamespaceName ) );
+
+            var header = new XElement( soapNs + "Header" );
+            var body = new XElement( soapNs + "Body" );
+            var fault = new XElement( soapNs + "Fault" );
+
+            body.Add( fault );
+            envelope.Add( header, body );
+            responseDoc.Add( envelope );
+
+
+            /*
+             * Header
+             */
+            execution.MomentEnd = DateTime.UtcNow;
+
+            XmlSerializer serHeader = new XmlSerializer( typeof( ExecutionHeader ) );
+            header.Add( serHeader.SerializeAsXElement( execution ) );
+
+
+            /*
+             * Fault
+             */
+            if ( version == SoapVersion.Soap11 )
             {
-                ser.Serialize( tw, oresp );
-            }
+                // TODO: recurse through exception stack
 
+                XElement x = new XElement( fwkNs + "ActorFault",
+                    new XElement( fwkNs + "Actor", new XText( exception.Actor ) ),
+                    new XElement( fwkNs + "Code", new XText( exception.Code.ToString( CultureInfo.InvariantCulture ) ) ),
+                    new XElement( fwkNs + "Message", new XText( exception.Description ) ),
+                    new XElement( fwkNs + "ExceptionType", new XText( exception.GetType().FullName ) )
+                );
+
+                if ( exception.StackTrace != null )
+                    x.Add( new XElement( fwkNs + "StackTrace", new XText( exception.StackTrace ) ) );
+
+                fault.Add(
+                    new XElement( "faultcode", new XText( exception.Actor.EndsWith( "Client", StringComparison.Ordinal ) == true ? "soap:Client" : "soap:Server" ) ),
+                    new XElement( "faultstring", new XText( exception.Description ) ),
+                    new XElement( "detail", x )
+                );
+            }
+            else
+            {
+                // TODO: implemented
+                throw new NotImplementedException();
+            }
 
 
             /*
              * 
              */
             SoapResponse response = new SoapResponse();
-            response.IsFault = false;
-            response.Message = sb.ToString();
+            response.Version = version;
+            response.IsFault = true;
+            response.Message = responseDoc.ToString( SaveOptions.DisableFormatting );
+
+            return response;
+        }
 
 
-            /*
-             * 
-             */
-            if ( request.Version == SoapVersion.Soap11 )
-            {
-                if ( response.IsFault == true )
-                    context.Response.StatusCode = 500;
-                else
-                    context.Response.StatusCode = 200;
+        private static void ResponseEmit( HttpContext context, SoapResponse response )
+        {
+            context.Response.TrySkipIisCustomErrors = true;
 
-                context.Response.CacheControl = "private";
+            if ( response.IsFault == true )
+                context.Response.StatusCode = 500;
+            else
+                context.Response.StatusCode = 200;
+
+            context.Response.CacheControl = "private";
+
+            if ( response.Version == SoapVersion.Soap12 )
                 context.Response.ContentType = "text/xml; charset=utf-8";
-
-                context.Response.Write( response.Message );
-                return;
-            }
-
-            if ( request.Version == SoapVersion.Soap12 )
-            {
-                if ( response.IsFault == true )
-                    context.Response.StatusCode = 500;
-                else
-                    context.Response.StatusCode = 200;
-
-                context.Response.CacheControl = "private";
+            else
                 context.Response.ContentType = "application/soap+xml; charset=utf-8";
 
-                context.Response.Write( response.Message );
-                return;
+            context.Response.Write( response.Message );
+        }
+
+
+
+        private static Dictionary<Type, XmlSerializer> _xsc = new Dictionary<Type, XmlSerializer>();
+
+        private static XmlSerializer XmlSerializerFor( Type messageType, string serviceNs )
+        {
+            XmlSerializer xs;
+
+            if ( _xsc.TryGetValue( messageType, out xs ) == true )
+                return xs;
+
+            lock ( _xsc )
+            {
+                XmlAttributes xa = new XmlAttributes();
+                xa.XmlRoot = new XmlRootAttribute() { Namespace = WebServicesConfiguration.Current.Namespace + serviceNs };
+
+                XmlAttributeOverrides xao = new XmlAttributeOverrides();
+                xao.Add( messageType, xa );
+
+                xs = new XmlSerializer( messageType, xao );
+
+                _xsc.Add( messageType, xs );
             }
+
+            return xs;
         }
 
 

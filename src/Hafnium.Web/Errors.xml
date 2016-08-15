@@ -2,8 +2,38 @@
 <errors xmlns="urn:platinum/actor">
     <actor base="{Application}" />
 
-    <error id="Placeholder" actor="~.Python" code="90001">
-        <description></description>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ~
+    ~ SOAP
+    ~
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <error id="Soap_RequestNotSoap" actor="~.Client" code="2001">
+        <description>Request message does not seem SOAP'y: expected headers are not present.</description>
+    </error>
+
+    <error id="Soap_ActionUnsupported" actor="~.Client" code="2002">
+        <description>Base address of SOAP action '{0}' doesn't match: expected '{1}'.</description>
+    </error>
+
+    <error id="Soap_ActionUnknown" actor="~.Client" code="2003">
+        <description>SOAP action '{0}' is unknown, and not supported.</description>
+    </error>
+
+    <error id="Soap_RequestNotXml" actor="~.Client" code="2004">
+        <description>soap:Body element not found.</description>
+    </error>
+
+    <error id="Soap_BodyNotFound" actor="~.Client" code="2005">
+        <description>soap:Body element not found.</description>
+    </error>
+
+    <error id="Soap_RequestInvalid" actor="~.Client" code="2006">
+        <description>Request message is invalid: rule '{0}' expects valid '{1}'.</description>
+    </error>
+
+    <error id="Soap_UnhandledException" actor="~.Web" code="2007">
+        <description>Unhandled exception.</description>
     </error>
 
 </errors>
