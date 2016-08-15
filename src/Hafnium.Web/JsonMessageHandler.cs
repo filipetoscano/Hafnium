@@ -1,6 +1,7 @@
 ﻿using Hafnium.Runtime;
 using Hafnium.WebServices.Json;
 using Newtonsoft.Json;
+using Platinum;
 using System;
 using System.IO;
 using System.Web;
@@ -21,7 +22,7 @@ namespace Hafnium.WebServices
             request.ExecutionId = Guid.NewGuid();
             request.Rule = urlPath.Replace( "/", "." );
             request.MomentStart = DateTime.UtcNow;
-            
+
 
 
             /*
@@ -56,20 +57,36 @@ namespace Hafnium.WebServices
             /*
              * 
              */
-            object oresp = rr.Run( rule, oreq );
+            JsonResponse response;
+
+            try
+            {
+                object oresp = rr.Run( rule, oreq );
+
+                response = new JsonResponse();
+                response.IsFault = false;
+                response.Message = JsonConvert.SerializeObject( oresp );
+            }
+            catch ( ActorException )
+            {
+                // TODO
+                response = new JsonResponse();
+                response.IsFault = false;
+                response.Message = "{}";
+            }
+            catch ( Exception )
+            {
+                // TODO
+                response = new JsonResponse();
+                response.IsFault = true;
+                response.Message = "{}";
+            }
 
 
             /*
              * 
              */
-            JsonResponse response = new JsonResponse();
-            response.IsFault = false;
-            response.Message = JsonConvert.SerializeObject( oresp );
-
-
-            /*
-             * 
-             */
+            context.Response.TrySkipIisCustomErrors = true;
             context.Response.StatusCode = 200;
             context.Response.CacheControl = "private";
             context.Response.ContentType = "application/json; charset=utf-8";
