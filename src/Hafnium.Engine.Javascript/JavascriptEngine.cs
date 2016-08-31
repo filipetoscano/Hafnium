@@ -2,7 +2,6 @@
 using Jurassic.Library;
 using System;
 using System.Reflection;
-using System.Text;
 
 namespace Hafnium.Engine.Javascript
 {
@@ -40,6 +39,21 @@ namespace Hafnium.Engine.Javascript
              * Input
              */
             engine.SetGlobalValue( "request", request );
+
+
+            /*
+             * Table lookups
+             */
+            engine.SetGlobalFunction( "lookup", new Func<ObjectInstance, ObjectInstance>( ( ObjectInstance keys ) =>
+            {
+                int i = (int) keys.GetPropertyValue( "KeyInt" );
+
+                ObjectInstance oi = engine.Object;
+                oi.SetPropertyValue( "Value1", i * 2, false );
+                oi.SetPropertyValue( "Value2", i * 3, false );
+
+                return oi;
+            } ) );
 
 
             /*

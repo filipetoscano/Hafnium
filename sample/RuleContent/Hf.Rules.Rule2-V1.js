@@ -1,7 +1,9 @@
 'use strict';
 
+var row = lookup({ KeyInt: request.Integer });
+
 var bool = false;
-var int = 5;
+var int = row.Value1 + row.Value2;
 var dec = 5.55;
 
 if ( request.Integer > 5 ) {
@@ -9,8 +11,8 @@ if ( request.Integer > 5 ) {
 }
 
 if ( request.Integer > 10 && request.Decimal > 10 ) {
-    int = -20;
-    dec = -20;
+    int = -int;
+    dec = -dec;
 }
 
 var response = {};

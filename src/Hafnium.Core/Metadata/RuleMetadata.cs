@@ -23,7 +23,7 @@
 
 
         /// <summary>
-        /// Gets list of authors.
+        /// Gets list of (technical) authors.
         /// </summary>
         public User[] Authors
         {

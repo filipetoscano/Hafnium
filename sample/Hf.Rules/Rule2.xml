@@ -1,10 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <?codebehind transformation="ToRule.xslt"?>
-<rule xmlns="urn:hafnium">
+<rule xmlns="urn:hafnium"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:hafnium Rules.xsd">
+
     <name>Sample Javascript rule.</name>
-    <author id="X001" name="FT" email="ft@gm" />
-    <owner id="X001" name="FT" email="ft@gm" />
-    <owner id="X002" name="LT" email="lt@gm" />
+
+    <author id="X001" />
+    <owner id="X001" />
+    <owner id="X002" />
 
     <request>
         <string name="Variant" variant="true" />

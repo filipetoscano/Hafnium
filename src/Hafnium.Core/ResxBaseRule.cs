@@ -120,8 +120,6 @@ namespace Hafnium
             {
                 User u = new User();
                 u.Id = authorElem.Attribute( "id" )?.Value;
-                u.Name = authorElem.Attribute( "name" )?.Value;
-                u.Email = authorElem.Attribute( "email" )?.Value;
 
                 authors.Add( u );
             }
@@ -138,8 +136,6 @@ namespace Hafnium
             {
                 User u = new User();
                 u.Id = ownerElem.Attribute( "id" )?.Value;
-                u.Name = ownerElem.Attribute( "name" )?.Value;
-                u.Email = ownerElem.Attribute( "email" )?.Value;
 
                 owners.Add( u );
             }

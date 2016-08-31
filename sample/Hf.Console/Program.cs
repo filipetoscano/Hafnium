@@ -22,7 +22,7 @@ namespace Hf.Client
                 s = args[ 2 ];
 
             //Rule1( i, d, s );
-            //Rule2( i, d, s );
+            Rule2( i, d, s );
             //Rule3( i, d, s );
             //Rule4( i, d, s );
         }
@@ -61,6 +61,7 @@ namespace Hf.Client
         public static void Rule2( int i, decimal d, string s )
         {
             Rule2Request request = new Rule2Request();
+            request.Variant = "V1";
             request.Integer = i;
             request.Decimal = d;
             request.String = s;

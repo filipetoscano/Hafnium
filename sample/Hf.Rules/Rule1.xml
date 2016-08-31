@@ -1,6 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <?codebehind transformation="ToRule.xslt"?>
-<rule xmlns="urn:hafnium" xmlns:xls="urn:hafnium/excel">
+<rule xmlns="urn:hafnium" xmlns:xls="urn:hafnium/excel"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:hafnium Rules.xsd">
+
     <name>Sample Excel rule.</name>
     <description>
         This rule is used to test whether Excel can be called as a 'rule'. It will
@@ -8,8 +10,8 @@
         values from the designated cells.
     </description>
 
-    <author name="FT" email="ft@gm" />
-    <owner name="FT" email="ft@gm" />
+    <author id="X001" />
+    <owner id="X001" />
 
     <request>
         <int name="Integer" xls:cell="API!B3" />

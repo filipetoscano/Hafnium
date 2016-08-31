@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    attributeFormDefault="unqualified" elementFormDefault="qualified"
+    targetNamespace="urn:hafnium"
+    xmlns:hf="urn:hafnium"
+    xmlns:xls="urn:hafnium/excel">
+
+    <xsd:import namespace="urn:hafnium/excel" schemaLocation="Rules-Excel.xsd" />
+
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ~
+    ~ rule/
+    ~
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <xsd:element name="rule">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="name" type="xsd:string" />
+                <xsd:element name="description" type="xsd:string" minOccurs="0" />
+
+                <xsd:element name="author" type="hf:user" minOccurs="0" maxOccurs="unbounded" />
+                <xsd:element name="owner" type="hf:user" minOccurs="0" maxOccurs="unbounded" />
+
+                <xsd:element name="request" type="hf:message" />
+                <xsd:element name="response" type="hf:message" />
+                <xsd:element name="engine" type="hf:engine" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ~
+    ~ shared type
+    ~
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <xsd:complexType name="user">
+        <xsd:attribute name="id" type="xsd:string" />
+    </xsd:complexType>
+
+
+    <xsd:simpleType name="engine">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="CSharp" />
+            <xsd:enumeration value="Excel" />
+            <xsd:enumeration value="Javascript" />
+            <xsd:enumeration value="Python" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ~
+    ~ request/response messages and data-types
+    ~
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <xsd:complexType name="message">
+        <xsd:choice minOccurs="1" maxOccurs="unbounded">
+            <xsd:element name="bool" type="hf:boolType" />
+            <xsd:element name="int" type="hf:intType" />
+            <xsd:element name="date" type="hf:dateType" />
+            <xsd:element name="decimal" type="hf:decimalType" />
+            <xsd:element name="string" type="hf:stringType" />
+        </xsd:choice>
+    </xsd:complexType>
+
+
+    <xsd:complexType name="boolType">
+        <xsd:attribute name="name" type="xsd:string" />
+        <xsd:attribute name="optional" type="xsd:boolean" use="optional" default="false" />
+
+        <xsd:attribute ref="xls:cell" use="optional" />
+    </xsd:complexType>
+
+    <xsd:complexType name="intType">
+        <xsd:attribute name="name" type="xsd:string" />
+        <xsd:attribute name="optional" type="xsd:boolean" use="optional" default="false" />
+
+        <xsd:attribute ref="xls:cell" use="optional" />
+    </xsd:complexType>
+
+    <xsd:complexType name="dateType">
+        <xsd:attribute name="name" type="xsd:string" />
+        <xsd:attribute name="optional" type="xsd:boolean" use="optional" default="false" />
+
+        <xsd:attribute ref="xls:cell" use="optional" />
+    </xsd:complexType>
+
+    <xsd:complexType name="decimalType">
+        <xsd:attribute name="name" type="xsd:string" />
+        <xsd:attribute name="optional" type="xsd:boolean" use="optional" default="false" />
+
+        <xsd:attribute ref="xls:cell" use="optional" />
+    </xsd:complexType>
+
+    <xsd:complexType name="stringType">
+        <xsd:attribute name="name" type="xsd:string" />
+        <xsd:attribute name="variant" type="xsd:string" />
+
+        <xsd:attribute ref="xls:cell" use="optional" />
+    </xsd:complexType>
+</xsd:schema>

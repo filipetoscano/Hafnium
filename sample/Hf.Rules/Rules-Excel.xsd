@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    attributeFormDefault="unqualified" elementFormDefault="qualified"
+    targetNamespace="urn:hafnium/excel"
+    xmlns:tns="urn:hafnium/excel">
+
+    <xsd:attribute name="cell" type="tns:cellReference" />
+
+    <xsd:simpleType name="cellReference">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="[A-Za-z][A-Za-z]*![A-Z]+[0-9]+" />
+        </xsd:restriction>
+    </xsd:simpleType>
+    
+</xsd:schema>
