@@ -1,28 +1,17 @@
-﻿using Platinum.Configuration;
-using System.Collections.Specialized;
-using System.Configuration;
-using KV = Platinum.Configuration.KeyValueConfigurationElement;
+﻿using System.Collections.Generic;
 
 namespace Hafnium.Runtime
 {
     public partial class RuntimeLoaderConfiguration
     {
-        [ConfigurationProperty( "", IsRequired = true, IsDefaultCollection = true )]
-        public ConfigurationElementCollection<KV> Settings
+        public Dictionary<string,string> AsDictionary()
         {
-            get { return (ConfigurationElementCollection<KV>) this[ "" ]; }
-            set { this[ "" ] = value; }
-        }
-
-
-        public NameValueCollection ToNvcSettings()
-        {
-            NameValueCollection nvc = new NameValueCollection();
+            Dictionary<string, string> dict = new Dictionary<string, string>();
 
             foreach ( var kv in this.Settings )
-                nvc.Set( kv.Key, kv.Value );
+                dict[ kv.Key ] = kv.Value;
 
-            return nvc;
+            return dict;
         }
     }
 }

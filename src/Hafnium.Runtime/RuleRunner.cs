@@ -118,7 +118,7 @@ namespace Hafnium.Runtime
              *
              */
             IContentLoader loader = Platinum.Activator.Create<IContentLoader>( RuntimeConfiguration.Current.ContentLoader.LoaderMoniker );
-            loader.Initialize( RuntimeConfiguration.Current.ContentLoader.ToNvcSettings() );
+            loader.Initialize( RuntimeConfiguration.Current.ContentLoader.AsDictionary() );
 
             RuleContent content;
 

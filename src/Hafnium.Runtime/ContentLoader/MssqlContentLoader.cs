@@ -1,9 +1,9 @@
-﻿using Platinum.Data;
-using System;
-using System.Collections.Specialized;
-using System.Linq;
-using Dapper;
+﻿using Dapper;
 using Platinum.Configuration;
+using Platinum.Data;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Hafnium.Runtime.ContentLoader
 {
@@ -12,7 +12,7 @@ namespace Hafnium.Runtime.ContentLoader
         private string _connectionName;
 
 
-        public void Initialize( NameValueCollection settings )
+        public void Initialize( Dictionary<string,string> settings )
         {
             #region Validations
 
@@ -55,14 +55,14 @@ namespace Hafnium.Runtime.ContentLoader
 
             if ( context.RuleVariant == null )
             {
-                rc = db.Query<RuleContent>( Db.Sql( "ContentLoader/MssqlLoadRule" ), new
+                rc = db.Query<RuleContent>( Db.Command( "ContentLoader/MssqlLoadRule" ), new
                 {
                     RuleName = context.Rule.Name,
                 } ).FirstOrDefault();
             }
             else
             {
-                rc = db.Query<RuleContent>( Db.Sql( "ContentLoader/MssqlLoadVariant" ), new
+                rc = db.Query<RuleContent>( Db.Command( "ContentLoader/MssqlLoadVariant" ), new
                 {
                     RuleName = context.Rule.Name,
                     RuleVariant = context.RuleVariant

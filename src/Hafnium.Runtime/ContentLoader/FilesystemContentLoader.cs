@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Specialized;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 
@@ -10,7 +10,7 @@ namespace Hafnium.Runtime.ContentLoader
         private string _baseDir;
 
 
-        public void Initialize( NameValueCollection settings )
+        public void Initialize( Dictionary<string,string> settings )
         {
             #region Validations
 

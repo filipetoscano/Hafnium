@@ -1,4 +1,4 @@
-﻿using System.Collections.Specialized;
+﻿using System.Collections.Generic;
 
 namespace Hafnium
 {
@@ -12,7 +12,7 @@ namespace Hafnium
         /// Initializes the content loader instance.
         /// </summary>
         /// <param name="settings">Configuration settings.</param>
-        void Initialize( NameValueCollection settings );
+        void Initialize( Dictionary<string,string> settings );
 
 
         /// <summary>

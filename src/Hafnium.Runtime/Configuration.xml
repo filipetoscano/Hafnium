@@ -4,6 +4,12 @@
     <section name="hafnium/runtime" type="RuntimeConfiguration">
         <element name="content" as="ContentLoader" type="RuntimeLoaderConfiguration">
             <string name="loader" as="LoaderMoniker" />
+            <keyValue />
+        </element>
+
+        <element name="userLookup" as="UserLookup" type="UserLookupConfiguration">
+            <string name="type" as="Moniker" />
+            <keyValue />
         </element>
     </section>
 
