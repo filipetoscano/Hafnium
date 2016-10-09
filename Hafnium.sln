@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{722DD8DC-F7B8-4C9B-9889-5470812FAB3F}"
 EndProject
@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hafnium.Core", "src\Hafnium
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hafnium.Runtime", "src\Hafnium.Runtime\Hafnium.Runtime.csproj", "{9F53DCA5-8B5F-47DF-AA16-FF0EB1E950C7}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sample", "sample", "{9650AC49-BF20-428D-AE30-67F072A866CC}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "zample", "zample", "{9650AC49-BF20-428D-AE30-67F072A866CC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hf.Endpoint", "sample\Hf.Endpoint\Hf.Endpoint.csproj", "{553A16FB-ACDA-4F5B-85DE-8713CB7965FA}"
 EndProject
@@ -27,9 +27,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hafnium.Engine.Python", "sr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hafnium.Engine.CSharp", "src\Hafnium.Engine.CSharp\Hafnium.Engine.CSharp.csproj", "{DE4E688E-BC83-47EC-B718-5CB4E3CC583C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "external", "external", "{1EE92E33-F6AE-449A-BB64-226020C6B897}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zinc.WebServices", "..\Copper\src\Zinc.WebServices\Zinc.WebServices.csproj", "{4C5DD63C-138C-44AF-98B5-BE22AEFB0150}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "global", "global", "{1880F0F8-920F-4CA8-93D6-F1565D522C9C}"
+	ProjectSection(SolutionItems) = preProject
+		automation.proj = automation.proj
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -77,10 +78,6 @@ Global
 		{DE4E688E-BC83-47EC-B718-5CB4E3CC583C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE4E688E-BC83-47EC-B718-5CB4E3CC583C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE4E688E-BC83-47EC-B718-5CB4E3CC583C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4C5DD63C-138C-44AF-98B5-BE22AEFB0150}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4C5DD63C-138C-44AF-98B5-BE22AEFB0150}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4C5DD63C-138C-44AF-98B5-BE22AEFB0150}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4C5DD63C-138C-44AF-98B5-BE22AEFB0150}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -96,6 +93,5 @@ Global
 		{96EFB45B-1395-4043-A248-66F5091A7FE8} = {722DD8DC-F7B8-4C9B-9889-5470812FAB3F}
 		{35B681AD-24C5-4C1B-8CE4-08B00EB38DCA} = {722DD8DC-F7B8-4C9B-9889-5470812FAB3F}
 		{DE4E688E-BC83-47EC-B718-5CB4E3CC583C} = {722DD8DC-F7B8-4C9B-9889-5470812FAB3F}
-		{4C5DD63C-138C-44AF-98B5-BE22AEFB0150} = {1EE92E33-F6AE-449A-BB64-226020C6B897}
 	EndGlobalSection
 EndGlobal

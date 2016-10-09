@@ -30,12 +30,24 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Dapper, Version=1.50.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Dapper.1.50.2\lib\net451\Dapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Platinum.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Platinum.Core.1.0.0.0\lib\net46\Platinum.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Platinum.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Platinum.Data.1.0.0.0\lib\net46\Platinum.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Platinum.Validation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Platinum.Validation.1.0.0\lib\net46\Platinum.Validation.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -48,6 +60,10 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="Zinc.WebServices, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Zinc.WebServices.1.0.0\lib\net46\Zinc.WebServices.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\GlobalVersion.cs">
@@ -80,10 +96,6 @@
     <Compile Include="Soap\SoapVersion.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Copper\src\Zinc.WebServices\Zinc.WebServices.csproj">
-      <Project>{4c5dd63c-138c-44af-98b5-be22aefb0150}</Project>
-      <Name>Zinc.WebServices</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Hafnium.Core\Hafnium.Core.csproj">
       <Project>{f463eeb4-97f2-4107-ad6b-2b61ddd8a9ed}</Project>
       <Name>Hafnium.Core</Name>
