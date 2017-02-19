@@ -44,13 +44,7 @@
         <Exec Command=" nuget restore " />
 
         <!-- Generated files -->
-        <Exec Command=" yvscmd --project=src\Hafnium.Core\Hafnium.Core.csproj " />
-        <Exec Command=" yvscmd --project=src\Hafnium.Engine.CSharp\Hafnium.Engine.CSharp.csproj " />
-        <Exec Command=" yvscmd --project=src\Hafnium.Engine.Excel\Hafnium.Engine.Excel.csproj " />
-        <Exec Command=" yvscmd --project=src\Hafnium.Engine.Javascript\Hafnium.Engine.Javascript.csproj " />
-        <Exec Command=" yvscmd --project=src\Hafnium.Engine.Python\Hafnium.Engine.Python.csproj " />
-        <Exec Command=" yvscmd --project=src\Hafnium.Runtime\Hafnium.Runtime.csproj " />
-        <Exec Command=" yvscmd --project=src\Hafnium.WebServices\Hafnium.WebServices.csproj " />
+        <Exec Command=" bin\ptvscmd.exe Hafnium.sln " />
 
         <!-- Compilation -->
         <MSBuild Projects="Hafnium.sln" Properties="Configuration=Release" />
