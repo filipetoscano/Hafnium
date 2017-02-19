@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 
 // General information
-[assembly: AssemblyTitle( "Hafnium.Runtime" )]
+[assembly: AssemblyTitle( "Hafnium Runtime" )]
 [assembly: AssemblyDescription( "Components to run Hafnium business rules" )]
 [assembly: AssemblyConfiguration( "" )]
 [assembly: AssemblyCompany( "Transition" )]

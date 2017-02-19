@@ -109,7 +109,7 @@
       <Project>{9f53dca5-8b5f-47df-aa16-ff0eb1e950c7}</Project>
       <Name>Hafnium.Runtime</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\Hafnium.Web\Hafnium.WebServices.csproj">
+    <ProjectReference Include="..\..\src\Hafnium.WebServices\Hafnium.WebServices.csproj">
       <Project>{17a9cdac-5424-4240-9693-4b6ce910213f}</Project>
       <Name>Hafnium.WebServices</Name>
     </ProjectReference>
