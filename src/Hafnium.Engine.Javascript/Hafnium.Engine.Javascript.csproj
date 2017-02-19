@@ -34,8 +34,8 @@
       <HintPath>..\..\packages\Jurassic.2.2.1\lib\net35\Jurassic.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Platinum.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Platinum.Core.1.0.0.0\lib\net46\Platinum.Core.dll</HintPath>
+    <Reference Include="Platinum.Core, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Platinum.Core.1.1.0\lib\net46\Platinum.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />

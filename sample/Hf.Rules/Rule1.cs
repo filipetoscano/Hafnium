@@ -43,7 +43,7 @@ namespace Hf.Rules
         public decimal Decimal { get; set; }
 
         /// <summary />
-        [JsonConverter( typeof( Platinum.Json.DateConverter ) )]
+        [JsonConverter( typeof( Zinc.Json.DateConverter ) )]
         [XmlElement( DataType = "date" )]
         [Map( Expression = "API!E6" )]
         public DateTime DateTime { get; set; }

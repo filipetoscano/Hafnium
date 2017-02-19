@@ -262,7 +262,7 @@ namespace </xsl:text>
     <xsl:template match=" * " mode="type-attr" />
 
     <xsl:template match=" hf:date " mode="type-attr">
-        <xsl:text>        [JsonConverter( typeof( Platinum.Json.DateConverter ) )]</xsl:text>
+        <xsl:text>        [JsonConverter( typeof( Zinc.Json.DateConverter ) )]</xsl:text>
         <xsl:value-of select=" $NewLine " />
 
         <xsl:text>        [XmlElement( DataType = "date" )]</xsl:text>
@@ -270,7 +270,7 @@ namespace </xsl:text>
     </xsl:template>
 
     <xsl:template match=" hf:date[ @optional = 'true' ] " mode="type-attr">
-        <xsl:text>        [JsonConverter( typeof( Platinum.Json.NullableDateConverter ) )]</xsl:text>
+        <xsl:text>        [JsonConverter( typeof( Zinc.Json.NullableDateConverter ) )]</xsl:text>
         <xsl:value-of select=" $NewLine " />
 
         <xsl:text>        [XmlElement( "xsd:date" )]</xsl:text>

@@ -41,10 +41,6 @@
     <Compile Include="BaseRule.cs" />
     <Compile Include="IContentLoader.cs" />
     <Compile Include="IRuleEngine.cs" />
-    <Compile Include="Json\DateConverter.cs" />
-    <Compile Include="Json\NullableDateConverter.cs" />
-    <Compile Include="Json\NullableTimeConverter.cs" />
-    <Compile Include="Json\TimeConverter.cs" />
     <Compile Include="MapAttribute.cs" />
     <Compile Include="Metadata\User.cs" />
     <Compile Include="Metadata\RuleMetadata.cs" />
@@ -57,8 +53,8 @@
       <HintPath>..\..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Platinum.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Platinum.Core.1.0.0.0\lib\net46\Platinum.Core.dll</HintPath>
+    <Reference Include="Platinum.Core, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Platinum.Core.1.1.0\lib\net46\Platinum.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />

@@ -37,7 +37,7 @@ namespace Hf.Rules
         public decimal Decimal { get; set; }
 
         /// <summary />
-        [JsonConverter( typeof( Platinum.Json.DateConverter ) )]
+        [JsonConverter( typeof( Zinc.Json.DateConverter ) )]
         [XmlElement( DataType = "date" )]
         public DateTime DateTime { get; set; }
 
