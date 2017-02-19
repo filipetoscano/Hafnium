@@ -32,6 +32,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "global", "global", "{1880F0
 		automation.proj = automation.proj
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hafnium.Transforms", "src\Hafnium.Transforms\Hafnium.Transforms.csproj", "{A53D5F02-9B81-4A88-B458-E5F783125C0C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -78,6 +80,10 @@ Global
 		{DE4E688E-BC83-47EC-B718-5CB4E3CC583C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE4E688E-BC83-47EC-B718-5CB4E3CC583C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE4E688E-BC83-47EC-B718-5CB4E3CC583C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A53D5F02-9B81-4A88-B458-E5F783125C0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A53D5F02-9B81-4A88-B458-E5F783125C0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A53D5F02-9B81-4A88-B458-E5F783125C0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A53D5F02-9B81-4A88-B458-E5F783125C0C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -93,5 +99,6 @@ Global
 		{96EFB45B-1395-4043-A248-66F5091A7FE8} = {722DD8DC-F7B8-4C9B-9889-5470812FAB3F}
 		{35B681AD-24C5-4C1B-8CE4-08B00EB38DCA} = {722DD8DC-F7B8-4C9B-9889-5470812FAB3F}
 		{DE4E688E-BC83-47EC-B718-5CB4E3CC583C} = {722DD8DC-F7B8-4C9B-9889-5470812FAB3F}
+		{A53D5F02-9B81-4A88-B458-E5F783125C0C} = {722DD8DC-F7B8-4C9B-9889-5470812FAB3F}
 	EndGlobalSection
 EndGlobal

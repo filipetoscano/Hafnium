@@ -5,7 +5,7 @@
     xmlns:hf="urn:hafnium"
     xmlns:xls="urn:hafnium/excel">
 
-    <xsd:import namespace="urn:hafnium/excel" schemaLocation="Rules-Excel.xsd" />
+    <xsd:import namespace="urn:hafnium/excel" schemaLocation="HafniumRules-Excel.xsd" />
 
 
     <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

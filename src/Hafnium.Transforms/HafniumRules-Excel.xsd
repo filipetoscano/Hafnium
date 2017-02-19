@@ -11,5 +11,5 @@
             <xsd:pattern value="[A-Za-z][A-Za-z]*![A-Z]+[0-9]+" />
         </xsd:restriction>
     </xsd:simpleType>
-    
+
 </xsd:schema>

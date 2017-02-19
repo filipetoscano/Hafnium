@@ -36,6 +36,7 @@
     <Target Name="build">
         <PropertyGroup>
             <versionInfo>[assembly: System.Reflection.AssemblyVersion( "$(version)" )]</versionInfo>
+            <nugetArgs> -OutputDirectory ..\..\build -IncludeReferencedProjects -Prop Configuration=Release </nugetArgs>
         </PropertyGroup>
 
         <WriteLinesToFile Overwrite="true" File="src\GlobalVersion.cs" Lines="$(versionInfo)" />
@@ -48,27 +49,22 @@
 
         <!-- Compilation -->
         <MSBuild Projects="Hafnium.sln" Properties="Configuration=Release" />
-    </Target>
 
+        <!-- Defn -->
+        <Copy SourceFiles="src\Hafnium.Transforms\Hafnium.Transforms.nuspecx" DestinationFiles="src\Hafnium.Transforms\Hafnium.Transforms.nuspec" />
+        <XmlPoke XmlInputPath="src\Hafnium.Transforms\Hafnium.Transforms.nuspec"
+                 Query="/package/metadata/version"
+                 Value="$(version)" />
 
-    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    ~ 
-    ~ pack/
-    ~ Build the nuget packages.
-    ~ 
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-    <Target Name="package">
-        <PropertyGroup>
-            <nugetArgs>-IncludeReferencedProjects -Prop Configuration=Release -OutputDirectory build</nugetArgs>
-        </PropertyGroup>
-
-        <Exec Command=" nuget pack $(nugetArgs) src\Hafnium.Core\Hafnium.Core.csproj " />
-        <Exec Command=" nuget pack $(nugetArgs) src\Hafnium.Engine.CSharp\Hafnium.Engine.CSharp.csproj " />
-        <Exec Command=" nuget pack $(nugetArgs) src\Hafnium.Engine.Excel\Hafnium.Engine.Excel.csproj " />
-        <Exec Command=" nuget pack $(nugetArgs) src\Hafnium.Engine.Javascript\Hafnium.Engine.Javascript.csproj " />
-        <Exec Command=" nuget pack $(nugetArgs) src\Hafnium.Engine.Python\Hafnium.Engine.Python.csproj " />
-        <Exec Command=" nuget pack $(nugetArgs) src\Hafnium.Runtime\Hafnium.Runtime.csproj " />
-        <Exec Command=" nuget pack $(nugetArgs) src\Hafnium.Web\Hafnium.WebServices.csproj " />
+        <!-- Pack -->
+        <Exec Command=" nuget pack $(nugetArgs) Hafnium.Core.csproj "              WorkingDirectory="src\Hafnium.Core" />
+        <Exec Command=" nuget pack $(nugetArgs) Hafnium.Engine.CSharp.csproj "     WorkingDirectory="src\Hafnium.Engine.CSharp" />
+        <Exec Command=" nuget pack $(nugetArgs) Hafnium.Engine.Excel.csproj "      WorkingDirectory="src\Hafnium.Engine.Excel" />
+        <Exec Command=" nuget pack $(nugetArgs) Hafnium.Engine.Javascript.csproj " WorkingDirectory="src\Hafnium.Engine.Javascript" />
+        <Exec Command=" nuget pack $(nugetArgs) Hafnium.Engine.Python.csproj "     WorkingDirectory="src\Hafnium.Engine.Python" />
+        <Exec Command=" nuget pack $(nugetArgs) Hafnium.Runtime.csproj "           WorkingDirectory="src\Hafnium.Runtime" />
+        <Exec Command=" nuget pack $(nugetArgs) Hafnium.WebServices.csproj "       WorkingDirectory="src\Hafnium.WebServices" />
+        <Exec Command=" nuget pack $(nugetArgs) Hafnium.Transforms.nuspec -OutputDirectory ..\..\build" WorkingDirectory="src\Hafnium.Transforms" />
     </Target>
 
 
@@ -86,6 +82,6 @@
         <Exec Command=" nuget pack -s $(nugetSource) $(nugetPushKey) build\Hafnium.Engine.Javascript.$(Version).nupkg " />
         <Exec Command=" nuget pack -s $(nugetSource) $(nugetPushKey) build\Hafnium.Engine.Python.$(Version).nupkg " />
         <Exec Command=" nuget pack -s $(nugetSource) $(nugetPushKey) build\Hafnium.Runtime.$(Version).nupkg " />
-        <Exec Command=" nuget pack -s $(nugetSource) $(nugetPushKey) build\Hafnium.Web.$(Version).nupkg " />
+        <Exec Command=" nuget pack -s $(nugetSource) $(nugetPushKey) build\Hafnium.WebServices.$(Version).nupkg " />
     </Target>
 </Project>

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<?codebehind transformation="ToRule.xslt"?>
+<?codebehind transformation="../../src/Hafnium.Transforms/Hafnium-ToRule.xslt"?>
 <rule xmlns="urn:hafnium" xmlns:xls="urn:hafnium/excel"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:hafnium Rules.xsd">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:hafnium ../../src/Hafnium.Transforms/HafniumRules.xsd">
 
     <name>Sample Excel rule.</name>
     <description>
