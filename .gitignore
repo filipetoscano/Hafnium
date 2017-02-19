@@ -4,13 +4,14 @@
 .vs/
 sample/**/bin/
 sample/**/obj/
+sample/Hf.Rules/Rule*.cs
 src/**/Configuration.cs
 src/**/ER.resx
 src/**/Errors.cs
 src/**/Exceptions.cs
 src/**/bin/
 src/**/obj/
+src/Hafnium.Transforms/Hafnium.Transforms.nuspec
 tests/**/bin/
 tests/**/obj/
 packages/
-src/Hafnium.Transforms/Hafnium.Transforms.nuspec
