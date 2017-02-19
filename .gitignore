@@ -4,6 +4,7 @@
 .vs/
 sample/**/bin/
 sample/**/obj/
+src/**/Configuration.cs
 src/**/ER.resx
 src/**/Errors.cs
 src/**/Exceptions.cs
