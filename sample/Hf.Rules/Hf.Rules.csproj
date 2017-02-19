@@ -78,25 +78,25 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Rule1.xml">
-      <Generator>YXsltTool</Generator>
+      <Generator>PtXsltTool</Generator>
       <LastGenOutput>Rule1.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Rule2.xml">
-      <Generator>YXsltTool</Generator>
+      <Generator>PtXsltTool</Generator>
       <LastGenOutput>Rule2.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Rule4.xml">
-      <Generator>YXsltTool</Generator>
+      <Generator>PtXsltTool</Generator>
       <LastGenOutput>Rule4.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Rule3.xml">
-      <Generator>YXsltTool</Generator>
+      <Generator>PtXsltTool</Generator>
       <LastGenOutput>Rule3.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
