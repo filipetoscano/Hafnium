@@ -45,7 +45,7 @@
         <Exec Command=" nuget restore " />
 
         <!-- Generated files -->
-        <Exec Command=" bin\ptvscmd.exe Hafnium.sln " />
+        <Exec Command=" bin\ptvscmd.exe --solution=Hafnium.sln " />
 
         <!-- Compilation -->
         <MSBuild Projects="Hafnium.sln" Properties="Configuration=Release" />
